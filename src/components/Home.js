@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/Home.css";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import { Input, Form, Select } from "antd";
 
 const Home = () => {
   const [action, setAction] = useState({ type: "GET_FACILITIES" });
@@ -51,38 +52,37 @@ const Home = () => {
         <div>Loading...</div>
       ) : (
         <>
-          <a href="/create">Create a new facility</a>
+          <a href="/create">Need more facilities? Click Here!</a>
           <br />
           <br />
 
           {facilities.length > 0 ? (
             <div className="facil-section">
               <div className="filters">
-              Filter By Type:
-              <input
-                type="text"
-                onChange={(event) => filterByType(event.target.value)}
-                style={{ color: "black" }}
-              />
-              <br />
-              <select
-                name="filterActive"
-                style={{ color: "blue" }}
-                onChange={(event) => filterByActive(event.target.value)}
-              >
-                <option value="">Filter By isActive</option>
-                <option value="true">Active</option>
-                <option value="false">Not Active</option>
-              </select>
+                <span style={{ fontSize: "1rem", fontWeight: "bolder" }}>
+                  Filters
+                </span>
+                <Input
+                  placeholder="Filter By Type"
+                  onChange={(event) => filterByType(event.target.value)}
+                />
+                <Select
+                    style={{width: "100%", background:"white", borderRadius: "0.2rem"}}
+                    onChange={(value) => filterByActive(value)}
+                  placeholder="Filter By Activity status"
+                  options={[{ label: "--Filter By Activity status--", value: "" },{ label: "Active", value: "true" }, { label: "Not Active", value: "false" }]}
+                />
               </div>
               <section className="facilities">
                 {(filter.type || filter.isActive
                   ? facilities.filter((f) => {
-                      let cond = f.type.toLowerCase().includes(filter.type);
+                      let cond = f.type.toLowerCase().includes(filter?.type);
+                      console.log("First: " + cond, filter);
                       const isActive = f.isActive ? "true" : "false";
                       cond = filter.isActive
-                        ? isActive === filter.isActive && cond
+                        ? isActive === filter.isActive && (!filter.type || cond)
                         : cond;
+                      console.log("Last: " + cond, filter);
                       return cond;
                     })
                   : facilities
@@ -93,9 +93,12 @@ const Home = () => {
                       <span className="isActive">
                         {f.isActive ? "Active" : "Not Active"}
                       </span>
-                      <br/><br/>
+                      <br />
+                      <br />
                       <div className="type">Type: {f.type}</div>
-                      <div className="description">Description: {f.description}</div>
+                      <div className="description">
+                        Description: {f.description}
+                      </div>
                       <div className="address">Address: {f.address}</div>
                       <Link to={{ pathname: "/update", data: f }}>Update</Link>
                       <div

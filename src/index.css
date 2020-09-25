@@ -1,6 +1,9 @@
 :root{
   --content-width: 80% ;
-  --back-color: #282c34;
+  --back-color: #e0e8f7;
+  --heading: rgb(87, 31, 177);
+  --link-color: dodgerblue;
+  --hover-color: deeppink;
   font-size: 20px;
 }
 
@@ -11,9 +14,10 @@ html, body{
 }
 
 .heading{
-  color: pink;
+  color: var(--heading);
   font-style: italic;
   margin-top: 3rem;
+  font-weight: bolder;
   font-size: 2rem;
   text-transform: uppercase;
 }
@@ -25,8 +29,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--back-color);
-  color: white !important;
   padding-top: 1rem;
+  text-align: center;
 }
 
 code {

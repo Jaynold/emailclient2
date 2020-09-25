@@ -2,7 +2,7 @@
   width: var(--content-width);
   margin: 0 auto;
   box-shadow: 3px 3px 3px wheat;
-  max-height: 25rem;
+  /* max-height: 25rem; */
   font-size: 1rem;
   overflow-y: scroll;
 }
@@ -23,12 +23,12 @@
   padding: 0.5rem;
 }
 
-.facility:not(:first-child) {
-  border-top: 2px solid salmon;
+a{
+  font-size: 1rem;
 }
 
-.facility span {
-  margin-left: auto;
+.facility:not(:first-child) {
+  border-top: 2px solid salmon;
 }
 
 .isActive {
@@ -36,18 +36,25 @@
 }
 
 .delete {
-  background-color: red;
+  background-color: crimson;
   border-radius: 50%;
   width: fit-content;
   padding: 0.5rem 1rem;
+  margin: 0.8rem 0;
   cursor: pointer;
 }
 
 .delete:hover {
-  border: 2px white solid;
+  background-color: red;
 }
+
+.filters{
+  display: grid;
+  gap: 0.5rem;
+}
+
 .id {
-  background-color: goldenrod;
+  background-color: rgb(15, 221, 211);
   border-radius: 50%;
   padding: 0.5rem 1rem;
 }
@@ -56,12 +63,13 @@
   display: flex;
   margin: 0 auto;
   width: 95%;
-  align-items: center;
+  align-items: flex-start;
 }
 
 @media only screen and (max-width: 800px) {
   .facil-section {
     display: flex;
     flex-direction: column;
-  }
+    align-items: center;
+}
 }

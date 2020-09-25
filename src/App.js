@@ -1,9 +1,8 @@
 import React from "react";
-import "./App.css";
 import { Switch, Route } from "react-router";
 import Home from "./components/Home";
-import CreateFacility from "./components/CreateFacility";
-import UpdateFacility from "./components/UpdateFacility";
+import MyForm from "./components/MyForm";
+
 
 function App() {
   return (
@@ -12,12 +11,8 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/create">
-          <CreateFacility />
-        </Route>
-        <Route path="/update">
-          <UpdateFacility />
-        </Route>
+        <Route path="/create" component={(props) => <MyForm {...props} type="Create"/>} />
+        <Route path="/update" component={(props) => <MyForm {...props} type="Update"/>} />
       </Switch>
     </div>
   );
