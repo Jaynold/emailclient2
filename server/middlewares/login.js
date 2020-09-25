@@ -1,7 +1,7 @@
 module.exports = (req, res, next) => {
-    if (req.path == "/login" && req.method == "POST"){
+    if (req.path === "/login" && req.method === "POST"){
         let body = req.body;
-        if (body.username == "demouser@macrosoft.com" && password == "Test_1234"){
+        if (body.username === "demouser@macrosoft.com" && body.password === "Test_1234"){
             res.status(200).send({
                 error: null,
                 message: null,

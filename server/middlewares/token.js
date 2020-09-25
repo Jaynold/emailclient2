@@ -3,7 +3,7 @@ module.exports = (req, res, next) => {
         if (req.headers && req.headers.authorization) {
             let token;
             const parts = req.headers.authorization.split(' ');
-            if (parts.length == 2) {
+            if (parts.length === 2) {
                 const [scheme, credentials] = parts;
     
                 if (/^Bearer$/i.test(scheme)) { // or any other scheme you are using

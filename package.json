@@ -6,9 +6,10 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "antd": "^4.6.5",
+    "axios": "^0.20.0",
     "body-parser": "^1.19.0",
-    "build": "webpack --config webpack.dev.js --mode development",
-    "concurrently": "^5.2.0",
+    "concurrently": "^5.3.0",
     "config": "^1.28.0",
     "cors": "^2.8.5",
     "express": "^4.16.2",
@@ -17,8 +18,9 @@
     "random-token": "0.0.8",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "release": "webpack --config webpack.prod.js --mode production"
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.3"
   },
   "scripts": {
     "mock-server": "json-server server/mock/index.json --middlewares server/middlewares/token.js --port 8082",
@@ -42,5 +44,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0"
   }
 }

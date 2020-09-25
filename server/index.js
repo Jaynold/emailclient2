@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 app.post('/login', (req, res) => {
     console.log(req.body)
     let body = req.body;
-    if (body.username == "demouser@macrosoft.com" && body.password == "Test_1234") {
+    if (body.username === "demouser@macrosoft.com" && body.password === "Test_1234") {
         res.status(200).send({
             error: null,
             message: null,
@@ -27,7 +27,6 @@ app.post('/login', (req, res) => {
             message: "Not authorized"
         });
     }
-
 });
 
 var server = app.listen(8081, function () {
