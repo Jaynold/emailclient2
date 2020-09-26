@@ -21,7 +21,7 @@
 }
 
 .facility:nth-child(odd) {
-  background-color: rgb(250, 234, 255);
+  background-color: #b9c6df;
 }
 
 .facility {
@@ -38,7 +38,7 @@
 }
 
 .update {
-  color: rgb(177, 129, 10);
+  color: yellow;
 }
 
 .ant-list-item-action-split{

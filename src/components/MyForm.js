@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Select, Switch } from "antd";
 import "../styles/CreateFacility.css";
-import { useFacilities } from "../reducer/useFacilities";
+import { useFacilities } from "../hooks/useFacilities";
 
 const MyForm = (props) => {
   const [, setConfig] = useFacilities(false);
@@ -40,6 +40,7 @@ const MyForm = (props) => {
     },
     whitespace: "${label} cannot be empty!"
   };
+  
   return (
     <>
       <h1 className="heading">

@@ -8,58 +8,34 @@
     {
       "name": "Power",
       "description": "To give power",
-      "type": "Electricity",
-      "isActive": false,
+      "type": "Furniture",
+      "isActive": true,
       "address": "Near Power House",
       "id": 1
     },
     {
-      "name": "Power Plant",
-      "description": "To give power to people",
-      "type": "Computers",
-      "isActive": true,
+      "name": "Nation",
+      "description": "To give power",
+      "type": "Electricity",
+      "isActive": false,
       "address": "Near Power House",
       "id": 2
     },
     {
-      "name": "Power",
+      "name": "Depth",
       "description": "To give power",
       "type": "Electricity",
-      "isActive": false,
+      "isActive": true,
       "address": "Near Power House",
       "id": 3
     },
     {
-      "name": "Power",
-      "description": "To give power",
-      "type": "Electricity",
+      "name": "sasd",
+      "description": "sdfsf",
+      "type": "Furniture",
       "isActive": true,
-      "address": "Near Power House",
+      "address": "sdf",
       "id": 4
-    },
-    {
-      "name": "Power",
-      "description": "To give power",
-      "type": "Electricity",
-      "isActive": false,
-      "address": "Near Power House",
-      "id": 5
-    },
-    {
-      "name": "Power",
-      "description": "To give power",
-      "type": "Electricity",
-      "isActive": true,
-      "address": "Near Power House",
-      "id": 6
-    },
-    {
-      "name": "Power",
-      "description": "To give power",
-      "type": "Electricity",
-      "isActive": true,
-      "address": "Near Power House",
-      "id": 7
     }
   ],
   "folders": [
