@@ -1,9 +1,12 @@
-.facilities {
+.facil-section{
   width: var(--content-width);
   margin: 0 auto;
-  box-shadow: 3px 3px 3px wheat;
+}
+
+.facilities {
+  width: inherit;
+  margin: 0 auto;
   /* max-height: 25rem; */
-  font-size: 1rem;
   overflow-y: scroll;
 }
 
@@ -13,63 +16,63 @@
 }
 
 .facilities::-webkit-scrollbar-thumb {
-  background: linear-gradient(to top, deeppink 50%, transparent);
+  /* background: linear-gradient(to top, deeppink 50%, transparent); */
   border-radius: 1rem;
+}
+
+.facility:nth-child(odd) {
+  background-color: rgb(250, 234, 255);
 }
 
 .facility {
   text-align: left;
-  width: 100%;
   padding: 0.5rem;
-}
-
-a{
-  font-size: 1rem;
 }
 
 .facility:not(:first-child) {
   border-top: 2px solid salmon;
 }
 
-.isActive {
-  float: right;
-}
-
 .delete {
-  background-color: crimson;
-  border-radius: 50%;
-  width: fit-content;
-  padding: 0.5rem 1rem;
-  margin: 0.8rem 0;
-  cursor: pointer;
+  color: red;
 }
 
-.delete:hover {
-  background-color: red;
+.update {
+  color: rgb(177, 129, 10);
+}
+
+.ant-list-item-action-split{
+  background-color: black;
 }
 
 .filters{
-  display: grid;
+  display: flex;
+  width: var(--content-width);
   gap: 0.5rem;
 }
 
 .id {
   background-color: rgb(15, 221, 211);
   border-radius: 50%;
-  padding: 0.5rem 1rem;
+  padding: 0.2rem 0.5rem;
+}
+
+.ant-select-selection-search{
+  display: none;
 }
 
 .facil-section {
   display: flex;
+    flex-direction: column;
   margin: 0 auto;
   width: 95%;
-  align-items: flex-start;
+  align-items: center;
 }
-
+/* 
 @media only screen and (max-width: 800px) {
   .facil-section {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-}
+} */

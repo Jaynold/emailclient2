@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Home.css";
 import { Link } from "react-router-dom";
-import { Input, Select } from "antd";
+import { Input, Select, List, Skeleton } from "antd";
 
 import  {useFacilities} from "../reducer/useFacilities"
 
@@ -32,9 +32,10 @@ const Home = () => {
           {facilities.length > 0 ? (
             <div className="facil-section">
               <div className="filters">
-                <span style={{ fontSize: "1rem", fontWeight: "bolder" }}>
-                  Filters
-                </span>
+                <Input
+                  placeholder="Filter By Name"
+                  onChange={(event) => filterByType(event.target.value)}
+                />
                 <Input
                   placeholder="Filter By Type"
                   onChange={(event) => filterByType(event.target.value)}
@@ -46,8 +47,13 @@ const Home = () => {
                   options={[{ label: "--Filter By Activity status--", value: "" },{ label: "Active", value: "true" }, { label: "Not Active", value: "false" }]}
                 />
               </div>
+              <br/>
               <section className="facilities">
-                {(filter.type || filter.isActive
+              <List
+                className="demo-loadmore-list"
+                itemLayout="vertical"
+                size="large"
+                dataSource={(filter.type || filter.isActive
                   ? facilities.filter((f) => {
                       let cond = f.type.toLowerCase().includes(filter?.type);
                       const isActive = f.isActive ? "true" : "false";
@@ -57,30 +63,36 @@ const Home = () => {
                       return cond;
                     })
                   : facilities
-                )?.map((f) => {
-                  return (
-                    <div className="facility" key={f.id}>
-                      <span className="id">{f.id}</span> {f.name}
-                      <span className="isActive">
-                        {f.isActive ? "Active" : "Not Active"}
-                      </span>
-                      <br />
-                      <br />
-                      <div className="type">Type: {f.type}</div>
-                      <div className="description">
-                        Description: {f.description}
-                      </div>
-                      <div className="address">Address: {f.address}</div>
-                      <Link to={{ pathname: "/update", data: f }}>Update</Link>
-                      <div
-                        className="delete"
-                        onClick={() => deleteFaciltity(f.id)}
-                      >
-                        X
-                      </div>
-                    </div>
-                  );
-                })}
+                )}
+                pagination={{
+                  onChange: page => {
+                    console.log(page);
+                  },
+                  pageSize: 4,
+                  position: "top",
+                  responsive: true
+                }}
+                renderItem={item => (
+                  <List.Item
+                  className="facility"
+                    actions={[<Link className="update" to={{ pathname: "/update", data: item }}>Update</Link>,
+                      <a className="delete" href="#delete"
+                        onClick={() => deleteFaciltity(item.id)}
+                      >Delete</a>]}
+                  >
+                    <Skeleton avatar title={false} loading={item.loading} active>
+                      <List.Item.Meta
+                        title={<div><span className="id">{item.id}</span> {item.name} (Location: {item.address})</div>}
+                        description={<div>
+                          <b>Type:</b> {item.type}<br/>
+                          <b>Description:</b> {item.description}
+                        </div>}
+                      />
+                      <div>{item.isActive ? "Active" : "Not Active"}</div>
+                    </Skeleton>
+                  </List.Item>
+                )}
+              />
               </section>
             </div>
           ) : (
@@ -88,6 +100,8 @@ const Home = () => {
           )}
         </>
       )}
+      <br/>
+      <br/>
     </>
   );
 };
