@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Select, Switch } from "antd";
 import "../styles/CreateFacility.css";
-import { useFacilities } from "../reducer/FacilitiesReducer";
+import { useFacilities } from "../reducer/useFacilities";
 
 const MyForm = (props) => {
   const [, setConfig] = useFacilities(false);
@@ -109,6 +109,7 @@ const MyForm = (props) => {
           className="formName"
           rules={[
             {
+              whitespace: true,
               required: true,
             },
           ]}

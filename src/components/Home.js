@@ -3,7 +3,7 @@ import "../styles/Home.css";
 import { Link } from "react-router-dom";
 import { Input, Select } from "antd";
 
-import  {useFacilities} from "../reducer/FacilitiesReducer"
+import  {useFacilities} from "../reducer/useFacilities"
 
 const Home = () => {
   const [filter, setFilter] = useState(false);

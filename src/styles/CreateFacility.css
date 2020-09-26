@@ -13,3 +13,21 @@
 .ant-form-item-label{
   text-align: left;
 }
+
+.ant-form-item-label label{
+  font-size: large;
+}
+
+.myForm .ant-select-selection-search{
+  display: none;
+}
+
+.ant-select-selector{
+  padding: 0.2rem;
+}
+
+@media only screen and (max-width: 700px){
+  .myForm{
+    max-width: 90%;
+  }
+}
