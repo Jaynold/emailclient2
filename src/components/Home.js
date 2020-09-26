@@ -1,43 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../styles/Home.css";
-import Axios from "axios";
 import { Link } from "react-router-dom";
-import { Input, Form, Select } from "antd";
+import { Input, Select } from "antd";
+
+import  {useFacilities} from "../reducer/FacilitiesReducer"
 
 const Home = () => {
-  const [action, setAction] = useState({ type: "GET_FACILITIES" });
-  const [facilities, setFacilities] = useState(false);
   const [filter, setFilter] = useState(false);
-
-  useEffect(() => {
-    let isCancel = false;
-    const fetchFacilities = async () => {
-      if (!isCancel) {
-        switch (action.type) {
-          case "DELETE_FACILITY":
-            await Axios.delete(
-              `http://localhost:8082/facilities/${action.id}`,
-              { headers: { Authorization: "Bearer sasadssad" } }
-            );
-          case "GET_FACILITIES":
-            const result = await Axios("http://localhost:8082/facilities", {
-              headers: { Authorization: "Bearer sasadssad" },
-            });
-            setFacilities(result.data);
-            break;
-          default:
-            break;
-        }
-      }
-    };
-    fetchFacilities();
-    return () => {
-      isCancel = true;
-    };
-  }, [action]);
+  const [facilities, setConfig] = useFacilities(false);
 
   const deleteFaciltity = async (id) => {
-    setAction({ type: "DELETE_FACILITY", id });
+    setConfig({url: `/${id}`, method: 'delete'});
   };
 
   const filterByType = (type) =>
@@ -77,12 +50,10 @@ const Home = () => {
                 {(filter.type || filter.isActive
                   ? facilities.filter((f) => {
                       let cond = f.type.toLowerCase().includes(filter?.type);
-                      console.log("First: " + cond, filter);
                       const isActive = f.isActive ? "true" : "false";
                       cond = filter.isActive
                         ? isActive === filter.isActive && (!filter.type || cond)
                         : cond;
-                      console.log("Last: " + cond, filter);
                       return cond;
                     })
                   : facilities

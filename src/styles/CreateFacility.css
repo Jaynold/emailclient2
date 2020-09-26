@@ -1,5 +1,15 @@
-.login-form {
+.myForm {
   max-width: 500px;
   margin: 0 auto;
+  text-align: left;
+}
+
+.ant-form-item-explain{
+  color:crimson;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.ant-form-item-label{
   text-align: left;
 }

@@ -1,27 +1,24 @@
 import React from "react";
 import { Form, Input, Button, Select, Switch } from "antd";
 import "../styles/CreateFacility.css";
-import Axios from "axios";
+import { useFacilities } from "../reducer/FacilitiesReducer";
 
 const MyForm = (props) => {
-  console.log(props.type);
+  const [, setConfig] = useFacilities(false);
+
   const onFinish = async (values) => {
     if (props.type === "Create")
-      await Axios.post("http://localhost:8082/facilities", values.facility, {
-        headers: { Authorization: "Bearer sasadssad" },
-      });
+      setConfig({ url: "", method: "post", data: values.facility });
     else
-      await Axios.patch(
-        "http://localhost:8082/facilities/" + props.location.data.id,
-        values.facility,
-        {
-          headers: { Authorization: "Bearer sasadssad" },
-        }
-      );
+      setConfig({
+        url: `/${props.location.data.id}`,
+        method: "patch",
+        data: values.facility,
+      });
     props.history.push("/");
   };
 
-  const types = [
+  const facility_types = [
     { label: "Electricity", value: "Electricity" },
     { label: "Furniture", value: "Furniture" },
     { label: "Computers", value: "Computers" },
@@ -41,6 +38,7 @@ const MyForm = (props) => {
     types: {
       email: "${label} is not valid email!",
     },
+    whitespace: "${label} cannot be empty!"
   };
   return (
     <>
@@ -51,9 +49,9 @@ const MyForm = (props) => {
       </h1>
       <Form
         {...layout}
-        layout="horizontal"
-        className="login-form"
-        name="nest-messages"
+        className="myForm"
+        name="myForm"
+        size="large"
         validateMessages={validateMessages}
         onFinish={onFinish}
       >
@@ -64,7 +62,6 @@ const MyForm = (props) => {
           rules={[
             {
               required: true,
-              message: "Please input facility  name!",
               whitespace: true,
             },
           ]}
@@ -79,7 +76,6 @@ const MyForm = (props) => {
           rules={[
             {
               required: true,
-              message: "Please input descriptioon fof facility!",
               whitespace: true,
             },
           ]}
@@ -90,11 +86,11 @@ const MyForm = (props) => {
         <Form.Item
           name={["facility", "type"]}
           label="Type"
-          rules={[{ required: true, message: "Missing type" }]}
+          rules={[{ required: true}]}
         >
           <Select
             placeholder="Select a Facility Type"
-            options={types}
+            options={facility_types}
             style={{ backgroundColor: "white" }}
             defaultValue={props.location.data?.type}
           />
@@ -103,9 +99,8 @@ const MyForm = (props) => {
         <Form.Item
           name={["facility", "isActive"]}
           label="isActive"
-          rules={[{ required: true }]}
         >
-          <Switch value={props.location.data?.isActive} />
+          <Switch defaultChecked={props.location.data?.isActive} />
         </Form.Item>
 
         <Form.Item

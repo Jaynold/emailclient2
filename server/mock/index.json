@@ -9,8 +9,8 @@
       "name": "Power",
       "description": "To give power",
       "type": "Electricity",
-      "isActive": true,
-      "address": "Power House, Goa",
+      "isActive": false,
+      "address": "Near Power Station",
       "id": 1
     }
   ],
