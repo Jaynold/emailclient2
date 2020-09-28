@@ -8,8 +8,10 @@
     {
       "name": "Power",
       "description": "To give power",
-      "type": ["Furniture"],
-      "email":"melissa@macrosoft.com",
+      "type": [
+        "Furniture"
+      ],
+      "email": "melissa@macrosoft.com",
       "isActive": true,
       "address": "Near Power House",
       "id": 1
@@ -17,20 +19,37 @@
     {
       "name": "Nation",
       "description": "To give power",
-      "email":"melissa@macrosoft.com",
-      "type": ["Electricity", "Furniture"],
+      "email": "melissa@macrosoft.com",
+      "type": [
+        "Electricity",
+        "Furniture"
+      ],
       "isActive": false,
       "address": "Near Power House",
       "id": 2
     },
     {
       "name": "Depth",
-      "email":"melissa@macrosoft.com",
+      "email": "melissa@macrosoft.com",
       "description": "To give power",
-      "type": ["Electricity"],
+      "type": [
+        "Electricity"
+      ],
       "isActive": true,
       "address": "Near Power House",
       "id": 3
+    },
+    {
+      "name": "Gorilla Power",
+      "email": "gorrilla@gmail.com",
+      "description": "To give gorr power",
+      "type": [
+        "Electricity",
+        "Computers"
+      ],
+      "isActive": false,
+      "address": "Near Power House",
+      "id": 4
     }
   ],
   "folders": [

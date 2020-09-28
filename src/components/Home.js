@@ -133,6 +133,8 @@ const Home = () => {
                           }
                           description={
                             <div>
+                              <b>Email:</b> {item.email}
+                              <br />
                               <b>Type:</b> {item.type.join(", ")}
                               <br />
                               <b>Description:</b> {item.description}

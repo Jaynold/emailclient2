@@ -7,16 +7,15 @@ const MyForm = (props) => {
   const [, setConfig] = useFacilities(false);
 
   const onFinish = (values) => {
-    console.log(values)
-    // if (props.type === "Create")
-    //   setConfig({ url: "", method: "post", data: values.facility });
-    // else
-    //   setConfig({
-    //     url: `/${props.location.data.id}`,
-    //     method: "patch",
-    //     data: values.facility,
-    //   });
-    // props.history.push("/");
+    if (props.type === "Create")
+      setConfig({ url: "", method: "post", data: values.facility });
+    else
+      setConfig({
+        url: `/${props.location.data.id}`,
+        method: "patch",
+        data: values.facility,
+      });
+    props.history.push("/");
   };
 
   const facility_types = [
