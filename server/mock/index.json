@@ -10,7 +10,8 @@
       "email": "gorrilla@gmail.com",
       "description": "To give power",
       "type": [
-        "Electricity"
+        "Furniture",
+        "Computers"
       ],
       "isActive": true,
       "address": "Near Power House",

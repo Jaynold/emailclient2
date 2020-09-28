@@ -1,38 +1,26 @@
-import React, { useState, useEffect } from "react";
-import "../styles/Home.css";
-import { Link } from "react-router-dom";
-import { List, Skeleton, Spin, Empty, Button } from "antd";
-
-import { useFacilities } from "../hooks/useFacilities";
-import Search from "antd/lib/input/Search";
+import React, { useState } from "react";
 import Filter from "./Filter";
+import Search from "antd/lib/input/Search";
+import { List } from "antd/lib/form/Form";
+import { Link } from "react-router-dom";
+import { Skeleton, Empty } from "antd";
 
-const Home = () => {
+const ListView = ({ data, deleteData }) => {
   const [filter, setFilter] = useState(false);
-  const [facilities, setConfig] = useFacilities(false);
-  
-  useEffect(() => {
-    setConfig({url: '', method: 'get'})
-  }, [setConfig])
-  
-  const deleteFaciltity = (id) => {
-    setConfig({ url: `/${id}`, method: "delete" });
-  };
-
   const onSearch = (searchText) => {
     setFilter((filter) => {
       return { ...filter, name: searchText.toLowerCase() };
     });
   };
 
-  const filterFacilities = () => {
-    const data = filter.name
-      ? facilities.filter((f) => f.name.toLowerCase().includes(filter?.name))
-      : facilities;
+  const filterData = () => {
+    const d = filter.name
+      ? data.filter((f) => f.name.toLowerCase().includes(filter?.name))
+      : data;
 
     if (filter.type || filter.isActive) {
-      return data.filter((f) => {
-        let cond = f.type.join(', ').toLowerCase().includes(filter?.type);
+      return d.filter((f) => {
+        let cond = f.type.join(", ").toLowerCase().includes(filter?.type);
         const isActive = f.isActive ? "true" : "false";
         cond = filter.isActive
           ? isActive === filter.isActive && (!filter.type || cond)
@@ -40,23 +28,19 @@ const Home = () => {
         return cond;
       });
     }
-    return data;
+    console.log(d)
+    return d;
   };
 
   return (
-    <>
-      <h1 className="heading">Facilities</h1>
-      <a href="/create">Need more facilities? Click Here!</a> <br/><br/>
-      {!facilities ? (
-        <Spin />
-      ) : (
-        <div className="list-view">
+      data && 
+    <div className="list-view">
           <div className="list-view-left">
             Filters:
             <Filter setFilter={setFilter} layout="column"/>
           </div>
           <div className="list-view-right">
-          {facilities.length > 0 ? (
+          {data.length > 0 ? (
             <>
               <Search
                 placeholder="Search By Name"
@@ -70,7 +54,7 @@ const Home = () => {
                   className="demo-loadmore-list"
                   itemLayout="vertical"
                   size="large"
-                  dataSource={filterFacilities()}
+                  dataSource={filterData()}
                   pagination={{
                     pageSize: 3,
                     responsive: true,
@@ -88,7 +72,6 @@ const Home = () => {
                         <a
                           className="delete"
                           href={`#delete-${item.id}`}
-                          onClick={() => deleteFaciltity(item.id)}
                         >
                           Delete
                         </a>,
@@ -140,22 +123,11 @@ const Home = () => {
               }}
               description={<span>No Facilities</span>}
             >
-              <Button
-                type="primary"
-                onClick={() => (document.location.href = "/create")}
-              >
-                Create a Facility
-              </Button>
             </Empty>
           )}
           </div>
         </div>
-      )
-        }
-      <br />
-      <br />
-    </>
   );
 };
 
-export default Home;
+export default ListView;

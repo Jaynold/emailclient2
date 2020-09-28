@@ -8,6 +8,10 @@ const MyForm = (props) => {
   const [response, setConfig] = useFacilities(false);
   const { id } = useParams();
 
+  useEffect(() => {
+    setConfig({ url: "", method: "get" });
+  }, [setConfig]);
+
   const onFinish = (values) => {
     if (props.type === "Create")
       setConfig({ url: "", method: "post", data: values.facility });
@@ -60,8 +64,7 @@ const MyForm = (props) => {
       >
         <Form.Item
           name={["facility", "name"]}
-          label="Name"
-          initialValue={response[id - 1]?.name}
+        label="Name"
           rules={[
             {
               required: true,
@@ -75,7 +78,7 @@ const MyForm = (props) => {
         <Form.Item
           name={["facility", "email"]}
           label="Email"
-          initialValue={props.location.data?.name}
+          initialValue={props.location.data?.email}
           rules={[
             {
               type: "email",
