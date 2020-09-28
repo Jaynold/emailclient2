@@ -8,7 +8,8 @@
     {
       "name": "Power",
       "description": "To give power",
-      "type": "Furniture",
+      "type": ["Furniture"],
+      "email":"melissa@macrosoft.com",
       "isActive": true,
       "address": "Near Power House",
       "id": 1
@@ -16,26 +17,20 @@
     {
       "name": "Nation",
       "description": "To give power",
-      "type": "Electricity",
+      "email":"melissa@macrosoft.com",
+      "type": ["Electricity", "Furniture"],
       "isActive": false,
       "address": "Near Power House",
       "id": 2
     },
     {
       "name": "Depth",
+      "email":"melissa@macrosoft.com",
       "description": "To give power",
-      "type": "Electricity",
+      "type": ["Electricity"],
       "isActive": true,
       "address": "Near Power House",
       "id": 3
-    },
-    {
-      "name": "sasd",
-      "description": "sdfsf",
-      "type": "Furniture",
-      "isActive": true,
-      "address": "sdf",
-      "id": 4
     }
   ],
   "folders": [

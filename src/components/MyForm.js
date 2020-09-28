@@ -6,16 +6,17 @@ import { useFacilities } from "../hooks/useFacilities";
 const MyForm = (props) => {
   const [, setConfig] = useFacilities(false);
 
-  const onFinish = async (values) => {
-    if (props.type === "Create")
-      setConfig({ url: "", method: "post", data: values.facility });
-    else
-      setConfig({
-        url: `/${props.location.data.id}`,
-        method: "patch",
-        data: values.facility,
-      });
-    props.history.push("/");
+  const onFinish = (values) => {
+    console.log(values)
+    // if (props.type === "Create")
+    //   setConfig({ url: "", method: "post", data: values.facility });
+    // else
+    //   setConfig({
+    //     url: `/${props.location.data.id}`,
+    //     method: "patch",
+    //     data: values.facility,
+    //   });
+    // props.history.push("/");
   };
 
   const facility_types = [
@@ -59,7 +60,6 @@ const MyForm = (props) => {
         <Form.Item
           name={["facility", "name"]}
           label="Name"
-          className="formName"
           rules={[
             {
               required: true,
@@ -71,9 +71,22 @@ const MyForm = (props) => {
         </Form.Item>
 
         <Form.Item
+          name={["facility", "email"]}
+          label="Email"
+          rules={[
+            {
+              type: "email",
+              required: true,
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input defaultValue={props.location.data?.name} />
+        </Form.Item>
+
+        <Form.Item
           name={["facility", "description"]}
           label="Description"
-          className="formName"
           rules={[
             {
               required: true,
@@ -90,6 +103,8 @@ const MyForm = (props) => {
           rules={[{ required: true}]}
         >
           <Select
+            mode="multiple"
+            allowClear
             placeholder="Select a Facility Type"
             options={facility_types}
             style={{ backgroundColor: "white" }}
@@ -107,7 +122,6 @@ const MyForm = (props) => {
         <Form.Item
           name={["facility", "address"]}
           label="Address"
-          className="formName"
           rules={[
             {
               whitespace: true,

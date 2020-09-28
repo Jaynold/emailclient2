@@ -15,35 +15,38 @@ const Home = () => {
   };
 
   const filterByType = (type) =>
-    setFilter({ ...filter, type: type.toLowerCase() });
+    setFilter((filter) => {
+      return { ...filter, type: type.toLowerCase() };
+    });
 
-  const filterByActive = (isActive) => setFilter({ ...filter, isActive });
+  const filterByActive = (isActive) =>
+    setFilter((filter) => {
+      return { ...filter, isActive };
+    });
 
   const onSearch = (searchText) => {
-    setFilter({ ...filter, name: searchText.toLowerCase() });
+    setFilter((filter) => {
+      return { ...filter, name: searchText.toLowerCase() };
+    });
   };
 
   const filterFacilities = () => {
-    if(filter.type || filter.isActive || filter.name){
-      return facilities.filter((f) => {
-        let cond = f.type
-          .toLowerCase()
-          .includes(filter?.type);
+    const data = filter.name
+      ? facilities.filter((f) => f.name.toLowerCase().includes(filter?.name))
+      : facilities;
+
+    if (filter.type || filter.isActive) {
+      return data.filter((f) => {
+        let cond = f.type.toLowerCase().includes(filter?.type);
         const isActive = f.isActive ? "true" : "false";
         cond = filter.isActive
-          ? isActive === filter.isActive &&
-            (!filter.type || cond)
-          : cond;
-          cond = filter.name
-          ? f.name.toLowerCase()
-          .includes(filter?.name) &&
-            (!filter.isActive || cond)
+          ? isActive === filter.isActive && (!filter.type || cond)
           : cond;
         return cond;
-      })
+      });
     }
-    return false;
-  }
+    return data;
+  };
 
   return (
     <>
@@ -59,12 +62,12 @@ const Home = () => {
           {facilities.length > 0 ? (
             <div className="facil-section">
               <Search
-                  placeholder="Search By Name"
-                  onSearch={onSearch}
-                  enterButton
-                  style={{width: "50%"}}
-                />
-                <br/>
+                placeholder="Search By Name"
+                onSearch={onSearch}
+                enterButton
+                style={{ width: "50%" }}
+              />
+              <br />
               <div className="filters">
                 <Input
                   placeholder="Filter By Type"
@@ -90,10 +93,7 @@ const Home = () => {
                   className="demo-loadmore-list"
                   itemLayout="vertical"
                   size="large"
-                  dataSource={
-                      filterFacilities()
-                      || facilities
-                  }
+                  dataSource={filterFacilities()}
                   pagination={{
                     pageSize: 3,
                     position: "top",
@@ -133,13 +133,21 @@ const Home = () => {
                           }
                           description={
                             <div>
-                              <b>Type:</b> {item.type}
+                              <b>Type:</b> {item.type.join(", ")}
                               <br />
                               <b>Description:</b> {item.description}
                             </div>
                           }
                         />
-                        <div style={{width:"fit-content" ,color: item.isActive ? "green" : "crimson"}}> {item.isActive ? "Active" : "Not Active"}</div>
+                        <div
+                          style={{
+                            width: "fit-content",
+                            color: item.isActive ? "green" : "crimson",
+                          }}
+                        >
+                          {" "}
+                          {item.isActive ? "Active" : "Not Active"}
+                        </div>
                       </Skeleton>
                     </List.Item>
                   )}
@@ -152,13 +160,14 @@ const Home = () => {
               imageStyle={{
                 height: 60,
               }}
-              description={
-                <span>
-                  No Facilities
-                </span>
-              }
+              description={<span>No Facilities</span>}
             >
-              <Button type="primary" onClick={() => document.location.href="/create"}>Create a Facility</Button>
+              <Button
+                type="primary"
+                onClick={() => (document.location.href = "/create")}
+              >
+                Create a Facility
+              </Button>
             </Empty>
           )}
         </>
