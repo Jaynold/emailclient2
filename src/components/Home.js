@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../styles/Home.css";
 import { Link } from "react-router-dom";
-import { Input, Select, List, Skeleton, Spin } from "antd";
+import { Input, Select, List, Skeleton, Spin, Empty, Button } from "antd";
 
 import { useFacilities } from "../hooks/useFacilities";
 import Search from "antd/lib/input/Search";
@@ -10,7 +10,7 @@ const Home = () => {
   const [filter, setFilter] = useState(false);
   const [facilities, setConfig] = useFacilities(false);
 
-  const deleteFaciltity = async (id) => {
+  const deleteFaciltity = (id) => {
     setConfig({ url: `/${id}`, method: "delete" });
   };
 
@@ -22,6 +22,29 @@ const Home = () => {
   const onSearch = (searchText) => {
     setFilter({ ...filter, name: searchText.toLowerCase() });
   };
+
+  const filterFacilities = () => {
+    if(filter.type || filter.isActive || filter.name){
+      return facilities.filter((f) => {
+        let cond = f.type
+          .toLowerCase()
+          .includes(filter?.type);
+        const isActive = f.isActive ? "true" : "false";
+        cond = filter.isActive
+          ? isActive === filter.isActive &&
+            (!filter.type || cond)
+          : cond;
+          cond = filter.name
+          ? f.name.toLowerCase()
+          .includes(filter?.name) &&
+            (!filter.isActive || cond)
+          : cond;
+        return cond;
+      })
+    }
+    return false;
+  }
+
   return (
     <>
       <h1 className="heading">Facilities</h1>
@@ -39,7 +62,6 @@ const Home = () => {
                   placeholder="Search By Name"
                   onSearch={onSearch}
                   enterButton
-                  options={facilities.name}
                   style={{width: "50%"}}
                 />
                 <br/>
@@ -52,7 +74,6 @@ const Home = () => {
                   style={{
                     width: "100%",
                     background: "white",
-                    borderRadius: "0.2rem",
                   }}
                   onChange={(value) => filterByActive(value)}
                   placeholder="Filter By Activity status"
@@ -70,30 +91,11 @@ const Home = () => {
                   itemLayout="vertical"
                   size="large"
                   dataSource={
-                    filter.type || filter.isActive || filter.name
-                      ? facilities.filter((f) => {
-                          let cond = f.type
-                            .toLowerCase()
-                            .includes(filter?.type);
-                          const isActive = f.isActive ? "true" : "false";
-                          cond = filter.isActive
-                            ? isActive === filter.isActive &&
-                              (!filter.type || cond)
-                            : cond;
-                            cond = filter.name
-                            ? f.name.toLowerCase()
-                            .includes(filter?.name) &&
-                              (!filter.isActive || cond)
-                            : cond;
-                          return cond;
-                        })
-                      : facilities
+                      filterFacilities()
+                      || facilities
                   }
                   pagination={{
-                    onChange: (page) => {
-                      console.log(page);
-                    },
-                    pageSize: 4,
+                    pageSize: 3,
                     position: "top",
                     responsive: true,
                   }}
@@ -109,7 +111,7 @@ const Home = () => {
                         </Link>,
                         <a
                           className="delete"
-                          href="#delete"
+                          href={`#delete-${item.id}`}
                           onClick={() => deleteFaciltity(item.id)}
                         >
                           Delete
@@ -145,7 +147,19 @@ const Home = () => {
               </section>
             </div>
           ) : (
-            <div>No Facilities available...</div>
+            <Empty
+              image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+              imageStyle={{
+                height: 60,
+              }}
+              description={
+                <span>
+                  No Facilities
+                </span>
+              }
+            >
+              <Button type="primary" onClick={() => document.location.href="/create"}>Create a Facility</Button>
+            </Empty>
           )}
         </>
       )}

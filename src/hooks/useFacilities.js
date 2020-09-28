@@ -26,9 +26,7 @@ export const useFacilities = (init) => {
 
     if (!didCancel) executeQuery(setResponse, config);
     
-    return () => {
-      didCancel = true;
-    };
+    return () => didCancel = true;
   }, [config]);
 
   return [response, setConfig];
