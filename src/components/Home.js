@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/Home.css";
 import { Link } from "react-router-dom";
 import { Input, Select, List, Skeleton, Spin, Empty, Button } from "antd";
@@ -9,7 +9,11 @@ import Search from "antd/lib/input/Search";
 const Home = () => {
   const [filter, setFilter] = useState(false);
   const [facilities, setConfig] = useFacilities(false);
-
+  
+  useEffect(() => {
+    setConfig({url: '', method: 'get'})
+  }, [setConfig])
+  
   const deleteFaciltity = (id) => {
     setConfig({ url: `/${id}`, method: "delete" });
   };
@@ -37,7 +41,7 @@ const Home = () => {
 
     if (filter.type || filter.isActive) {
       return data.filter((f) => {
-        let cond = f.type.toLowerCase().includes(filter?.type);
+        let cond = f.type.join(', ').toLowerCase().includes(filter?.type);
         const isActive = f.isActive ? "true" : "false";
         cond = filter.isActive
           ? isActive === filter.isActive && (!filter.type || cond)
@@ -105,7 +109,7 @@ const Home = () => {
                       actions={[
                         <Link
                           className="update"
-                          to={{ pathname: "/update", data: item }}
+                          to={{ pathname: `/update/${item.id}`, data: item }}
                         >
                           Update
                         </Link>,

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, Button, Select, Switch } from "antd";
 import "../styles/CreateFacility.css";
 import { useFacilities } from "../hooks/useFacilities";
+import { useParams } from "react-router";
 
 const MyForm = (props) => {
-  const [, setConfig] = useFacilities(false);
+  const [response, setConfig] = useFacilities(false);
+  const { id } = useParams();
 
   const onFinish = (values) => {
     if (props.type === "Create")
@@ -38,14 +40,14 @@ const MyForm = (props) => {
     types: {
       email: "${label} is not valid email!",
     },
-    whitespace: "${label} cannot be empty!"
+    whitespace: "${label} cannot be empty!",
   };
-  
+
   return (
     <>
       <h1 className="heading">
         {props.type === "Update"
-          ? "Update Facility " + props.location.data.id
+          ? "Update Facility " + id
           : "Create a Facility"}
       </h1>
       <Form
@@ -59,6 +61,7 @@ const MyForm = (props) => {
         <Form.Item
           name={["facility", "name"]}
           label="Name"
+          initialValue={response[id - 1]?.name}
           rules={[
             {
               required: true,
@@ -66,12 +69,13 @@ const MyForm = (props) => {
             },
           ]}
         >
-          <Input defaultValue={props.location.data?.name} />
+          <Input />
         </Form.Item>
 
         <Form.Item
           name={["facility", "email"]}
           label="Email"
+          initialValue={props.location.data?.name}
           rules={[
             {
               type: "email",
@@ -80,12 +84,13 @@ const MyForm = (props) => {
             },
           ]}
         >
-          <Input defaultValue={props.location.data?.name} />
+          <Input />
         </Form.Item>
 
         <Form.Item
           name={["facility", "description"]}
           label="Description"
+          initialValue={props.location.data?.description}
           rules={[
             {
               required: true,
@@ -93,13 +98,13 @@ const MyForm = (props) => {
             },
           ]}
         >
-          <Input defaultValue={props.location.data?.description} />
+          <Input />
         </Form.Item>
 
         <Form.Item
           name={["facility", "type"]}
           label="Type"
-          rules={[{ required: true}]}
+          rules={[{ required: true }]}
         >
           <Select
             mode="multiple"
@@ -111,10 +116,7 @@ const MyForm = (props) => {
           />
         </Form.Item>
 
-        <Form.Item
-          name={["facility", "isActive"]}
-          label="isActive"
-        >
+        <Form.Item name={["facility", "isActive"]} label="isActive">
           <Switch defaultChecked={props.location.data?.isActive} />
         </Form.Item>
 
