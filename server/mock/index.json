@@ -6,15 +6,14 @@
   },
   "facilities": [
     {
-      "name": "Power",
-      "email": "gorrilla@gmail.com",
-      "description": "To give power",
+      "name": "Gorilla Power",
+      "email": "sadas@asd.com",
+      "description": "sdfdf",
       "type": [
-        "Furniture",
-        "Computers"
+        "Furniture"
       ],
-      "isActive": true,
-      "address": "Near Power House",
+      "isActive": false,
+      "address": "sdfsdf",
       "id": 1
     }
   ],

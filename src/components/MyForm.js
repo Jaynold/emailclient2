@@ -1,23 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Form, Input, Button, Select, Switch } from "antd";
 import "../styles/CreateFacility.css";
 import { useFacilities } from "../hooks/useFacilities";
 import { useParams } from "react-router";
 
 const MyForm = (props) => {
-  const [response, setConfig] = useFacilities(false);
+  const [, setConfig] = useFacilities(false);
   const { id } = useParams();
-
-  useEffect(() => {
-    setConfig({ url: "", method: "get" });
-  }, [setConfig]);
 
   const onFinish = (values) => {
     if (props.type === "Create")
       setConfig({ url: "", method: "post", data: values.facility });
     else
       setConfig({
-        url: `/${props.location.data.id}`,
+        url: `/${id}`,
         method: "patch",
         data: values.facility,
       });

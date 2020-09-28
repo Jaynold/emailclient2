@@ -123,7 +123,6 @@ const Home = () => {
                             color: item.isActive ? "green" : "crimson",
                           }}
                         >
-                          {" "}
                           {item.isActive ? "Active" : "Not Active"}
                         </div>
                       </Skeleton>
@@ -139,14 +138,7 @@ const Home = () => {
                 height: 60,
               }}
               description={<span>No Facilities</span>}
-            >
-              <Button
-                type="primary"
-                onClick={() => (document.location.href = "/create")}
-              >
-                Create a Facility
-              </Button>
-            </Empty>
+            />
           )}
           </div>
         </div>
