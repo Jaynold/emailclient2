@@ -10,8 +10,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={() => <Home />}/>
         <Route exact path="/table" component={() => <TableView />}/>
-        <Route path="/create" component={(props) => <MyForm {...props} type="Create"/>} />
-        <Route path="/update/:id" component={(props) => <MyForm {...props} type="Update"/>} />
+        <Route path="/create" component={() => <MyForm type="Create"/>} />
+        <Route path="/update/:id" component={() => <MyForm type="Update"/>} />
         <Route path="*" component={() => <Redirect to="/"/>}/>
       </Switch>
     </div>

@@ -12,11 +12,11 @@ export const useFacilities = (init) => {
         await Axios.request({
           ...config,
           baseURL: process.env.REACT_APP_BASE_URL,
-          headers: { Authorization: "Bearer sasadssad" },
+          headers: { Authorization: process.env.REACT_APP_AUTHORIZATION },
         });
       if (!(config.method === "post" || config.method === "patch")) {
-        const result = await Axios.get(process.env.REACT_APP_BASE_URL, {
-          headers: { Authorization: "Bearer sasadssad" },
+        const result = await Axios.get(process.env.REACT_APP_BASE_URL + config.url, {
+          headers: { Authorization: process.env.REACT_APP_AUTHORIZATION},
         });
         setResponse(result.data);
       }
