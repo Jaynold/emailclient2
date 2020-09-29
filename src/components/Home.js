@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/Home.css";
 import { Link } from "react-router-dom";
 import { List, Skeleton, Spin, Empty } from "antd";
+import {debounce} from 'lodash'
 
 import { useFacilities } from "../hooks/useFacilities";
 import Search from "antd/lib/input/Search";
@@ -53,18 +54,18 @@ const Home = () => {
         <div className="list-view">
           <div className="list-view-left">
             Filters:
-            <Filter setFilter={setFilter} layout="column"/>
+            <Filter setFilter={setFilter} debounce={debounce} layout="column"/>
           </div>
           <div className="list-view-right">
           {facilities.length > 0 ? (
             <>
               <Search
                 placeholder="Search By Name"
-                onSearch={onSearch}
+                onSearch={debounce(onSearch, 250, { 'maxWait': 1000 })}
                 enterButton
                 style={{ width: "50%"}}
               />
-              <Filter setFilter={setFilter} layout="row"/>
+              <Filter setFilter={setFilter} debounce={debounce} layout="row"/>
               <section className="facilities">
                 <List
                   className="demo-loadmore-list"
@@ -72,7 +73,7 @@ const Home = () => {
                   size="large"
                   dataSource={filterFacilities()}
                   pagination={{
-                    pageSize: 3,
+                    pageSize: 5,
                     responsive: true,
                   }}
                   renderItem={(item) => (
@@ -95,7 +96,6 @@ const Home = () => {
                       ]}
                     >
                       <Skeleton
-                        avatar
                         title={false}
                         loading={facilities ? false : true}
                         active
