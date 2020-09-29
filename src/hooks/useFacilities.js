@@ -11,11 +11,11 @@ export const useFacilities = (init) => {
       if (config.method !== "get")
         await Axios.request({
           ...config,
-          baseURL: "http://localhost:8082/facilities",
+          baseURL: process.env.REACT_APP_BASE_URL,
           headers: { Authorization: "Bearer sasadssad" },
         });
       if (!(config.method === "post" || config.method === "patch")) {
-        const result = await Axios.get("http://localhost:8082/facilities", {
+        const result = await Axios.get(process.env.REACT_APP_BASE_URL, {
           headers: { Authorization: "Bearer sasadssad" },
         });
         setResponse(result.data);
