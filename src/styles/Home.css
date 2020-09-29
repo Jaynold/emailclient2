@@ -50,13 +50,8 @@
   color: yellow;
 }
 
-.ant-list-item-action-split{
-  background-color: black;
-}
-
 .ant-select-selector, .ant-select-dropdown *{
   text-align: left;
-  cursor: pointer;
 }
 
 .filters{

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Home.css";
 import { Link } from "react-router-dom";
-import { List, Skeleton, Spin, Empty, Button } from "antd";
+import { List, Skeleton, Spin, Empty } from "antd";
 
 import { useFacilities } from "../hooks/useFacilities";
 import Search from "antd/lib/input/Search";

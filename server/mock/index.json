@@ -8,13 +8,34 @@
     {
       "name": "Gorilla Power",
       "email": "sadas@asd.com",
-      "description": "sdfdf",
+      "description": "To give power",
       "type": [
-        "Furniture"
+        "Furniture", "Computers"
       ],
       "isActive": false,
       "address": "sdfsdf",
       "id": 1
+    },
+    {
+      "name": "Power",
+      "email": "mell@asd.com",
+      "description": "sdfdf",
+      "type": [
+        "Furniture"
+      ],
+      "isActive": true,
+      "address": "sdfsdf",
+      "id": 2
+    },{
+      "name": "Danger",
+      "email": "dang@asd.com",
+      "description": "Power",
+      "type": [
+        "Furniture", "Electronics"
+      ],
+      "isActive": true,
+      "address": "sdfsdf",
+      "id": 3
     }
   ],
   "folders": [
