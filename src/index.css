@@ -1,9 +1,11 @@
 :root{
   --content-width: 80% ;
-  --back-color: #e0e8f7;
+  --back-color: rgb(255, 221, 255);
   --heading: rgb(167, 4, 167);
   --link-color: dodgerblue;
   --hover-color: deeppink;
+  --navbar-color: rgb(43, 5, 73);
+  --navbar-width: 10rem;
   font-size: 20px;
 }
 
@@ -16,7 +18,7 @@ html, body{
 .heading{
   color: var(--heading);
   font-style: italic;
-  margin-top: 3rem;
+  margin-top: 1rem;
   font-weight: bolder;
   font-size: 2rem;
   text-transform: uppercase;
@@ -38,14 +40,26 @@ code {
     monospace;
 }
 
-@media only screen  and (max-width: 700px) {
+.content{
+  height: 100%;
+  margin-left: var(--navbar-width);
+}
+
+@media only screen and (max-width: 500px) {
+  :root{
+    font-size: 2px;
+    --content-width: 95%
+  }
+}
+
+@media only screen and (max-width: 700px) {
   :root{
     font-size: 15px;
     --content-width: 95%
   }
 }
 
-@media only screen  and (max-width: 2000px) {
+@media only screen and (max-width: 2000px) {
   :root{
     font-size: 25px;
   }

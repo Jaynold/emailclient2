@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Home.css";
 import { Link } from "react-router-dom";
-import { List, Skeleton, Spin, Empty } from "antd";
-import {debounce} from 'lodash'
+import { List, Skeleton, Spin, Empty, Button } from "antd";
+import { debounce } from "lodash";
 
 import { useFacilities } from "../hooks/useFacilities";
 import Search from "antd/lib/input/Search";
@@ -11,11 +11,11 @@ import Filter from "./Filter";
 const Home = () => {
   const [filter, setFilter] = useState(false);
   const [facilities, setConfig] = useFacilities(false);
-  
+
   useEffect(() => {
-    setConfig({url: '', method: 'get'})
-  }, [setConfig])
-  
+    setConfig({ url: "", method: "get" });
+  }, [setConfig]);
+
   const deleteFaciltity = (id) => {
     setConfig({ url: `/${id}`, method: "delete" });
   };
@@ -33,7 +33,7 @@ const Home = () => {
 
     if (filter.type || filter.isActive) {
       return data.filter((f) => {
-        let cond = f.type.join(', ').toLowerCase().includes(filter?.type);
+        let cond = f.type.join(", ").toLowerCase().includes(filter?.type);
         const isActive = f.isActive ? "true" : "false";
         cond = filter.isActive
           ? isActive === filter.isActive && (!filter.type || cond)
@@ -46,90 +46,90 @@ const Home = () => {
 
   return (
     <>
-      <h1 className="heading">Facilities</h1>
-      <a href="/create">Need more facilities? Click Here!</a> <br/><br/>
+      <h1 className="heading" style={{ fontSize: "2rem" }}>
+        Facilities
+      </h1>
+      <a href="/create">Need more facilities? Click Here!</a> <br />
+      <br />
       {!facilities ? (
         <Spin />
       ) : (
-        <div className="list-view">
-          <div className="list-view-left">
-            Filters:
-            <Filter setFilter={setFilter} debounce={debounce} layout="column"/>
-          </div>
-          <div className="list-view-right">
+        <div className="home">
           {facilities.length > 0 ? (
             <>
               <Search
+                className="search"
                 placeholder="Search By Name"
-                onSearch={debounce(onSearch, 250, { 'maxWait': 1000 })}
+                onSearch={debounce(onSearch, 250, { maxWait: 1000 })}
                 enterButton
-                style={{ width: "50%"}}
               />
-              <Filter setFilter={setFilter} debounce={debounce} layout="row"/>
-              <section className="facilities">
-                <List
-                  className="demo-loadmore-list"
-                  itemLayout="vertical"
-                  size="large"
-                  dataSource={filterFacilities()}
-                  pagination={{
-                    pageSize: 5,
-                    responsive: true,
-                  }}
-                  renderItem={(item) => (
-                    <List.Item
-                      className="facility"
-                      actions={[
-                        <Link
-                          className="update"
-                          to={{ pathname: `/update/${item.id}`, data: item }}
-                        >
-                          Update
-                        </Link>,
-                        <a
-                          className="delete"
-                          href={`#delete-${item.id}`}
-                          onClick={() => deleteFaciltity(item.id)}
-                        >
-                          Delete
-                        </a>,
-                      ]}
-                    >
-                      <Skeleton
-                        title={false}
-                        loading={facilities ? false : true}
-                        active
+              <Filter setFilter={setFilter} debounce={debounce} layout="row" />
+              <List
+                className="facilities-data"
+                itemLayout="vertical"
+                size="large"
+                loadingIndicator={<Spin />}
+                loading={filterFacilities() ? false : <Spin />}
+                dataSource={filterFacilities()}
+                pagination={{
+                  pageSize: 5,
+                  responsive: true,
+                }}
+                renderItem={(item) => (
+                  <List.Item
+                    className="facility"
+                    actions={[
+                      <Button
+                        type="primary"
+                        style={{background: 'goldenrod', borderColor: "gold"}}
+                        onClick={() =>
+                          (document.location.href = `/update/${item.id}`)
+                        }
                       >
-                        <List.Item.Meta
-                          title={
-                            <div>
-                              <span className="id">{item.id}</span> {item.name}{" "}
-                              (Location: {item.address})
-                            </div>
-                          }
-                          description={
-                            <div>
-                              <b>Email:</b> {item.email}
-                              <br />
-                              <b>Type:</b> {item.type.join(", ")}
-                              <br />
-                              <b>Description:</b> {item.description}
-                            </div>
-                          }
-                        />
-                        <div
-                          style={{
-                            width: "fit-content",
-                            color: item.isActive ? "green" : "crimson",
-                          }}
-                        >
-                          {item.isActive ? "Active" : "Not Active"}
-                        </div>
-                      </Skeleton>
-                    </List.Item>
-                  )}
-                />
-              </section>
+                        Update
+                      </Button>,
+                      <Button
+                        type="danger"
+                        onClick={() => deleteFaciltity(item.id)}
+                      >
+                        Delete
+                      </Button>,
+                    ]}
+                  >
+                    <Skeleton
+                      title={false}
+                      loading={facilities ? false : true}
+                      active
+                    >
+                      <List.Item.Meta
+                        title={
+                          <div>
+                            <span className="id">{item.id}</span> {item.name}{" "}
+                            (Location: {item.address})
+                          </div>
+                        }
+                        description={
+                          <div>
+                            <b>Email:</b> {item.email}
+                            <br />
+                            <b>Type:</b> {item.type.join(", ")}
+                            <br />
+                            <b>Description:</b> {item.description}
+                          </div>
+                        }
+                      />
+                      <div
+                        style={{
+                          width: "fit-content",
+                          color: item.isActive ? "green" : "crimson",
+                        }}
+                      >
+                        {item.isActive ? "Active" : "Not Active"}
+                      </div>
+                    </Skeleton>
+                  </List.Item>
+                )}
+              />
             </>
           ) : (
             <Empty
@@ -140,10 +140,8 @@ const Home = () => {
               description={<span>No Facilities</span>}
             />
           )}
-          </div>
         </div>
-      )
-        }
+      )}
       <br />
       <br />
     </>

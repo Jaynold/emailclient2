@@ -1,53 +1,41 @@
-.list-view{
-  display: flex;
-  background-color: rgb(211, 212, 149);
+.home{
+  margin: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(auto, 1fr));
+  gap: 1rem;
 }
 
-.list-view-left{
-  padding: 0.5rem;
-  width: 40%;
-  border-right: 2px solid black;
-}
-
-.list-view-right{
+.facilities-data {
   width: 100%;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
+  grid-column: span 4 / 5;
 }
 
-.facilities {
-  width: 100%;
-  margin: 0 auto;
-  /* max-height: 25rem; */
-  overflow-y: scroll;
+.add-facility{
+  grid-row: 1;
+  grid-column: span 1 / 2;
 }
 
-.facilities::-webkit-scrollbar {
+.search{
+  grid-row: 1;
+  grid-column: span 1 / 5;
+}
+
+.facilities-data::-webkit-scrollbar {
   width: 0.25rem;
   background-color: transparent;
 }
 
-.facilities::-webkit-scrollbar-thumb {
-  /* background: linear-gradient(to top, deeppink 50%, transparent); */
+.facilities-data::-webkit-scrollbar-thumb {
+  background: linear-gradient(to top, var(--navbar-color) 50%, transparent);
   border-radius: 1rem;
 }
 
 .facility {
   text-align: left;
-  padding: 0.5rem;
 }
 
-.facility:not(:first-child) {
-  border-top: 2px solid salmon;
-}
-
-.delete {
-  color: red;
-}
-
-.update {
-  color: darkgoldenrod;
+.facility:nth-child(odd) {
+  background-color: rgb(252, 238, 252);
 }
 
 .ant-select-selector, .ant-select-dropdown *{
@@ -55,15 +43,16 @@
 }
 
 .filters{
-  display: flex;
-  gap: 0.5rem;
-  margin: 1rem 0;
-  height: fit-content;
-  width: 100%;
+  grid-row: 2;
+  grid-column: span 4 / 5;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(auto, 1fr));
+  gap: 1rem;
 }
 
 .id {
   background-color: rgb(15, 221, 211);
   border-radius: 50%;
   padding: 0.2rem 0.5rem;
+  color: var(--navbar-color);
 }

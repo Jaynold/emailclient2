@@ -13,9 +13,11 @@ const Filter = ({ setFilter, layout, debounce }) => {
       return { ...filter, isActive };
     });
     
-  return (
-    <div className="filters" style={{ flexDirection: layout }}>
-      <Input
+    const filterColStyle = layout === "column" ? { display: "flex", flexDirection: layout } : {};
+    return (
+      <div className="filters" style={filterColStyle}>
+        {layout === "column" && <div style={{textAlign: "left", color: "snow"}}>Filters: </div>}
+        <Input
         placeholder="Filter By Type"
         onChange={(event) => debounce(filterByType, 250, { 'maxWait': 1000 })(event.target.value)}
       />

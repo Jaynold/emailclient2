@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Form, Input, Button, Select, Switch, Spin } from "antd";
-import "../styles/CreateFacility.css";
 import { useFacilities } from "../hooks/useFacilities";
 import { useParams, useHistory } from "react-router";
+import "../styles/MyForm.css";
 
 const MyForm = (props) => {
   const [response, setConfig] = useFacilities(false);
@@ -58,7 +58,7 @@ const MyForm = (props) => {
       {props.type === "Create" || (props.type === "Update" && response) ? (
         <Form
           {...layout}
-          className="myForm"
+          className="frm"
           name="myForm"
           size="large"
           validateMessages={validateMessages}
