@@ -97,7 +97,7 @@ const Home = () => {
                       <Skeleton
                         avatar
                         title={false}
-                        loading={item.loading}
+                        loading={facilities ? false : true}
                         active
                       >
                         <List.Item.Meta

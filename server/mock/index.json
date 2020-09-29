@@ -10,7 +10,8 @@
       "email": "sadas@asd.com",
       "description": "To give power",
       "type": [
-        "Furniture", "Computers"
+        "Furniture",
+        "Computers"
       ],
       "isActive": false,
       "address": "sdfsdf",
@@ -26,16 +27,6 @@
       "isActive": true,
       "address": "sdfsdf",
       "id": 2
-    },{
-      "name": "Danger",
-      "email": "dang@asd.com",
-      "description": "Power",
-      "type": [
-        "Furniture", "Electronics"
-      ],
-      "isActive": true,
-      "address": "sdfsdf",
-      "id": 3
     }
   ],
   "folders": [
