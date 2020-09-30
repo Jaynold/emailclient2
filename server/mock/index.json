@@ -13,8 +13,32 @@
         "Electricity"
       ],
       "isActive": true,
-      "address": "Near Power House",
+      "address": "Near Power",
       "id": 1
+    },
+    {
+      "name": "Power",
+      "email": "gorrilla@gmail.com",
+      "description": "To give power",
+      "type": [
+        "Electricity"
+      ],
+      "isActive": false,
+      "address": "Near Power House",
+      "id": 2
+    },
+    {
+      "name": "Power",
+      "email": "sdf@asd.com",
+      "description": "dsf",
+      "type": [
+        "Electricity",
+        "Furniture",
+        "Computers"
+      ],
+      "isActive": true,
+      "address": "Near Power House",
+      "id": 3
     }
   ],
   "folders": [

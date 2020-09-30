@@ -1,9 +1,18 @@
 import React from "react";
 
 const Filter = ({ filter, layout, render }) => {
+
+  const checkType = value => {
+    switch(typeof value) {
+      case "string":
+        return value.toLowerCase();
+        default:
+          return value;
+    }
+  }
     const filterData = (id, value) =>
     filter((filter) => {
-      return { ...filter, [id]: value };
+      return { ...filter, [id]: checkType(value) };
     });
 
   const filterColStyle =

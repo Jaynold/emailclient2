@@ -64,8 +64,8 @@ const Navbar = () => {
                     }
                     placeholder="Filter By Activity status"
                     options={[
-                      { label: "Active", value: "true" },
-                      { label: "Not Active", value: "false" },
+                      { label: "Active", value: "Active" },
+                      { label: "Not Active", value: "Not Active" },
                     ]}
                   />
                   <Input
@@ -73,6 +73,15 @@ const Navbar = () => {
                     onChange={(event) =>
                       debounce(setFilter, 250, { maxWait: 500 })(
                         "address",
+                        event.target.value
+                      )
+                    }
+                  />
+                  <Input
+                    placeholder="Filter By Name"
+                    onChange={(event) =>
+                      debounce(setFilter, 250, { maxWait: 500 })(
+                        "name",
                         event.target.value
                       )
                     }

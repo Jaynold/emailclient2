@@ -28,34 +28,41 @@ const Home = () => {
 
   const filterFacilities = () => {
     const typeCondition = (f) =>
-      f.type
-        .join(", ")
-        .toLowerCase()
-        .includes(filter.state?.type?.toLowerCase());
-    const isActiveCondition = (f) => (f.isActive ? "true" : "false");
-
+      !(typeof filter.state.type && filter.state.type)
+        ? "undefined"
+        : f.type.join(", ").toLowerCase().includes(filter.state?.type);
+    const addressCondition = (f) =>
+      !(typeof filter.state.address && filter.state.address)
+        ? "undefined"
+        : f.address.toLowerCase().includes(filter.state?.address);
+    const isActiveCondition = (f) =>
+      typeof filter.state.isActive === "undefined"
+        ? "undefined"
+        : (f.isActive ? "active" : "not active") === filter.state?.isActive;
+    const nameCondition = (f) =>
+      typeof filter.state.name === "undefined"
+        ? "undefined"
+        : f.name.toLowerCase().includes(filter.state?.name);
     const data = filter.state?.name
       ? facilities.filter((f) =>
-          f.name.toLowerCase().includes(filter.state?.name?.toLowerCase())
+          f.name.toLowerCase().includes(filter.state?.name)
         )
       : facilities;
 
     if (filter.state?.type || filter.state?.isActive || filter.state?.address) {
       return data.filter((f) => {
-        console.log(filter.state.isActive);
-        let cond = typeCondition(f);
-
-        cond = filter.state.address
-          ? f.address
-              .toLowerCase()
-              .includes(filter.state?.address?.toLowerCase()) &&
-            (!filter.state?.type || cond)
-          : cond;
-        cond = filter.state.isActive
-          ? isActiveCondition(f) === filter.state.isActive &&
-            (!filter.state?.address || cond)
-          : cond;
-        return cond;
+        const conds = [
+          typeCondition(f),
+          isActiveCondition(f),
+          addressCondition(f),
+          nameCondition(f),
+        ];
+        let count = 0;
+        while (count < 3) {
+          if (!conds[count]) return false;
+          count++;
+        }
+        return true;
       });
     }
     return data;
@@ -110,8 +117,8 @@ const Home = () => {
                         }
                         placeholder="Filter By Activity status"
                         options={[
-                          { label: "Active", value: "true" },
-                          { label: "Not Active", value: "false" },
+                          { label: "Active", value: "Active" },
+                          { label: "Not Active", value: "Not Active" },
                         ]}
                       />
                       <Input
@@ -119,6 +126,15 @@ const Home = () => {
                         onChange={(event) =>
                           debounce(setFilter, 250, { maxWait: 500 })(
                             "address",
+                            event.target.value
+                          )
+                        }
+                      />
+                      <Input
+                        placeholder="Filter By Name"
+                        onChange={(event) =>
+                          debounce(setFilter, 250, { maxWait: 500 })(
+                            "name",
                             event.target.value
                           )
                         }

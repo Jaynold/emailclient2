@@ -51,9 +51,7 @@ export const useFacilities = (init) => {
         action.type === "GET_FACILITITES" ||
         action.type === "DELETE_FACILITY"
       )
-        result = await Axios.request({
-          method: "get",
-          baseURL: process.env.REACT_APP_BASE_URL,
+        result = await Axios.get(process.env.REACT_APP_BASE_URL, {
           headers: { Authorization: process.env.REACT_APP_AUTHORIZATION },
         });
       setResponse(result.data);
