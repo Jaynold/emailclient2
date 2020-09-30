@@ -6,38 +6,15 @@
   },
   "facilities": [
     {
-      "name": "Wind",
+      "name": "Gorilla Power",
       "email": "gorrilla@gmail.com",
       "description": "To give power",
       "type": [
-        "Electricity",
-        "Furniture"
+        "Electricity"
       ],
       "isActive": true,
       "address": "Near Power House",
       "id": 1
-    },
-    {
-      "name": "Power",
-      "email": "gorrilla@gmail.com",
-      "description": "To give power",
-      "type": [
-        "Electricity"
-      ],
-      "isActive": true,
-      "address": "Near Power House",
-      "id": 2
-    },
-    {
-      "name": "Electric",
-      "email": "gorrilla@gmail.com",
-      "description": "To give power",
-      "type": [
-        "Electricity"
-      ],
-      "isActive": false,
-      "address": "Near Power House",
-      "id": 3
     }
   ],
   "folders": [

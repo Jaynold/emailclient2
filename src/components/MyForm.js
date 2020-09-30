@@ -13,21 +13,17 @@ const MyForm = (props) => {
     () => {
       let didCancel = false;
       if(!didCancel && props.type === "Update")
-        setConfig({ url: `/${id}`, method: "get" });
-      return () => didCancel = true 
+        setConfig({ type: "GET_FACILITY", id });
+      return () => didCancel = true
     },
     [id, props.type, setConfig]
   );
 
   const onFinish = (values) => {
     if (props.type === "Create")
-      setConfig({ url: "", method: "post", data: values.facility });
+      setConfig({ type: "CREATE_FACILITY", data: values.facility });
     else
-      setConfig({
-        url: `/${id}`,
-        method: "patch",
-        data: values.facility,
-      });
+      setConfig({ type: "UPDATE_FACILITY", id, data: values.facility });
     history.push("/");
   };
 

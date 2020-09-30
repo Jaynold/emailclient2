@@ -13,11 +13,11 @@ const Home = () => {
   const [facilities, setConfig] = useFacilities(false);
 
   useEffect(() => {
-    setConfig({ url: "", method: "get" });
+    setConfig({ type: "GET_FACILITIES" });
   }, [setConfig]);
 
   const deleteFaciltity = (id) => {
-    setConfig({ url: `/${id}`, method: "delete" });
+    setConfig({ type: "DELETE_FACILITY", id });
   };
 
   const onSearch = (searchText) => {
