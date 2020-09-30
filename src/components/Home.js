@@ -7,18 +7,15 @@ import { useFacilities } from "../hooks/useFacilities";
 import Search from "antd/lib/input/Search";
 import Filter from "./Filter";
 import { FilterContext } from "../contexts/FilterContext";
+import MyFilters from "./MyFilters";
 
 const Home = () => {
   const filter = useContext(FilterContext);
   const [facilities, setConfig] = useFacilities(false);
 
-  useEffect(() => {
-    setConfig({ type: "GET_FACILITIES" });
-  }, [setConfig]);
+  useEffect(() => setConfig({ type: "GET_FACILITIES" }), [setConfig]);
 
-  const deleteFaciltity = (id) => {
-    setConfig({ type: "DELETE_FACILITY", id });
-  };
+  const deleteFaciltity = (id) => setConfig({ type: "DELETE_FACILITY", id });
 
   const onSearch = (searchText) => {
     filter.setstate((filter) => {
@@ -28,37 +25,35 @@ const Home = () => {
 
   const filterFacilities = () => {
     const typeCondition = (f) =>
-      !(typeof filter.state.type && filter.state.type)
-        ? "undefined"
-        : f.type.join(", ").toLowerCase().includes(filter.state?.type);
+      typeof filter.state.type === "undefined" ||
+      f.type.join(", ").toLowerCase().includes(filter.state?.type);
     const addressCondition = (f) =>
-      !(typeof filter.state.address && filter.state.address)
-        ? "undefined"
-        : f.address.toLowerCase().includes(filter.state?.address);
+      typeof filter.state.address === "undefined" ||
+      f.address.toLowerCase().includes(filter.state?.address);
     const isActiveCondition = (f) =>
-      typeof filter.state.isActive === "undefined"
-        ? "undefined"
-        : (f.isActive ? "active" : "not active") === filter.state?.isActive;
-    const nameCondition = (f) =>
-      typeof filter.state.name === "undefined"
-        ? "undefined"
-        : f.name.toLowerCase().includes(filter.state?.name);
+      typeof filter.state.isActive === "undefined" ||
+      (f.isActive ? "Active" : "not active").toLowerCase() ===
+        filter.state?.isActive;
+    const emailCondition = (f) =>
+      typeof filter.state.email === "undefined" ||
+      f.email.toLowerCase().includes(filter.state?.email);
     const data = filter.state?.name
       ? facilities.filter((f) =>
           f.name.toLowerCase().includes(filter.state?.name)
         )
       : facilities;
 
-    if (filter.state?.type || filter.state?.isActive || filter.state?.address) {
+    if (!filter.state?.name) {
       return data.filter((f) => {
         const conds = [
           typeCondition(f),
           isActiveCondition(f),
           addressCondition(f),
-          nameCondition(f),
+          emailCondition(f),
         ];
+        console.log(conds);
         let count = 0;
-        while (count < 3) {
+        while (count < conds.length) {
           if (!conds[count]) return false;
           count++;
         }
@@ -90,58 +85,7 @@ const Home = () => {
               <Filter
                 filter={filter.setstate}
                 layout="row"
-                render={(setFilter) => {
-                  return (
-                    <>
-                      <Input
-                        placeholder="Filter By Type"
-                        onChange={(event) =>
-                          debounce(setFilter, 250, { maxWait: 500 })(
-                            "type",
-                            event.target.value
-                          )
-                        }
-                      />
-                      <Select
-                        style={{
-                          width: "100%",
-                          background: "white",
-                        }}
-                        defaultActiveFirstOption="false"
-                        allowClear
-                        onChange={(value) =>
-                          debounce(setFilter, 250, { maxWait: 500 })(
-                            "isActive",
-                            value
-                          )
-                        }
-                        placeholder="Filter By Activity status"
-                        options={[
-                          { label: "Active", value: "Active" },
-                          { label: "Not Active", value: "Not Active" },
-                        ]}
-                      />
-                      <Input
-                        placeholder="Filter By Address"
-                        onChange={(event) =>
-                          debounce(setFilter, 250, { maxWait: 500 })(
-                            "address",
-                            event.target.value
-                          )
-                        }
-                      />
-                      <Input
-                        placeholder="Filter By Name"
-                        onChange={(event) =>
-                          debounce(setFilter, 250, { maxWait: 500 })(
-                            "name",
-                            event.target.value
-                          )
-                        }
-                      />
-                    </>
-                  );
-                }}
+                render={(setFilter) => <MyFilters setFilter={setFilter}/>}
               />
               <List
                 className="facilities-data"

@@ -9,21 +9,17 @@ const MyForm = (props) => {
   const { id } = useParams();
   const history = useHistory();
 
-  useEffect(
-    () => {
-      let didCancel = false;
-      if(!didCancel && props.type === "Update")
-        setConfig({ type: "GET_FACILITY", id });
-      return () => didCancel = true
-    },
-    [id, props.type, setConfig]
-  );
+  useEffect(() => {
+    let didCancel = false;
+    if (!didCancel && props.type === "Update")
+      setConfig({ type: "GET_FACILITY", id });
+    return () => (didCancel = true);
+  }, [id, props.type, setConfig]);
 
   const onFinish = (values) => {
     if (props.type === "Create")
       setConfig({ type: "CREATE_FACILITY", data: values.facility });
-    else
-      setConfig({ type: "UPDATE_FACILITY", id, data: values.facility });
+    else setConfig({ type: "UPDATE_FACILITY", id, data: values.facility });
     history.push("/");
   };
 

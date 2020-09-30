@@ -6,6 +6,7 @@ import Filter from "./Filter";
 import { FilterContext } from "../contexts/FilterContext";
 import { Input, Select } from "antd";
 import { debounce } from "lodash";
+import MyFilters from "./MyFilters";
 
 const Navbar = () => {
   const filter = useContext(FilterContext);
@@ -37,58 +38,7 @@ const Navbar = () => {
           <Filter
             filter={filter.setstate}
             layout="column"
-            render={(setFilter) => {
-              return (
-                <>
-                  <Input
-                    placeholder="Filter By Type"
-                    onChange={(event) =>
-                      debounce(setFilter, 250, { maxWait: 500 })(
-                        "type",
-                        event.target.value
-                      )
-                    }
-                  />
-                  <Select
-                    style={{
-                      width: "100%",
-                      background: "white",
-                    }}
-                    defaultActiveFirstOption="false"
-                    allowClear
-                    onChange={(value) =>
-                      debounce(setFilter, 250, { maxWait: 500 })(
-                        "isActive",
-                        value
-                      )
-                    }
-                    placeholder="Filter By Activity status"
-                    options={[
-                      { label: "Active", value: "Active" },
-                      { label: "Not Active", value: "Not Active" },
-                    ]}
-                  />
-                  <Input
-                    placeholder="Filter By Address"
-                    onChange={(event) =>
-                      debounce(setFilter, 250, { maxWait: 500 })(
-                        "address",
-                        event.target.value
-                      )
-                    }
-                  />
-                  <Input
-                    placeholder="Filter By Name"
-                    onChange={(event) =>
-                      debounce(setFilter, 250, { maxWait: 500 })(
-                        "name",
-                        event.target.value
-                      )
-                    }
-                  />
-                </>
-              );
-            }}
+            render={(setFilter) => <MyFilters setFilter={setFilter} />}
           />
         </li>
       </ul>
