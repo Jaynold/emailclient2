@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import '../styles/Navbar.css'
 import { NavLink } from 'react-router-dom';
 import Logo from "../logo.svg"
 import Filter from "./Filter"
+import { FilterContext } from '../contexts/FilterContext';
+
 const Navbar = () => {
+  const filter = useContext(FilterContext)
+
     return (
         <nav className="navbar">
             <ul className="navbar-nav">
@@ -21,7 +25,7 @@ const Navbar = () => {
                     </NavLink>
                 </li>
                 <li className="nav-item">
-                    {/* <Filter layout="column"/> */}
+                    <Filter filter={filter} layout="column"/>
                 </li>
             </ul>
         </nav>

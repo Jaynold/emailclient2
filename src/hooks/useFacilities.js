@@ -8,18 +8,19 @@ export const useFacilities = (init) => {
   useEffect(() => {
     let didCancel = false;
     const executeQuery = async (setResponse, config) => {
-      if (config.method !== "get")
-        await Axios.request({
+      let result;
+      if (config.method !== "get" || (config.method === "get" && config.url))
+        result = await Axios.request({
           ...config,
           baseURL: process.env.REACT_APP_BASE_URL,
           headers: { Authorization: process.env.REACT_APP_AUTHORIZATION },
         });
-      if (!(config.method === "post" || config.method === "patch")) {
-        const result = await Axios.get(process.env.REACT_APP_BASE_URL + config.url, {
-          headers: { Authorization: process.env.REACT_APP_AUTHORIZATION},
+        
+      if (config.method === "delete" || (config.method === "get" && !config.url))
+        result = await Axios.get(process.env.REACT_APP_BASE_URL, {
+          headers: { Authorization: process.env.REACT_APP_AUTHORIZATION },
         });
-        setResponse(result.data);
-      }
+      setResponse(result.data);
     };
 
     if (!didCancel && config) executeQuery(setResponse, config);

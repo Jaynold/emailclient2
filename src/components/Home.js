@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import "../styles/Home.css";
-import { Link } from "react-router-dom";
 import { List, Skeleton, Spin, Empty, Button } from "antd";
 import { debounce } from "lodash";
 
 import { useFacilities } from "../hooks/useFacilities";
 import Search from "antd/lib/input/Search";
 import Filter from "./Filter";
+import { FilterContext } from "../contexts/FilterContext";
 
 const Home = () => {
-  const [filter, setFilter] = useState(false);
+  const filter = useContext(FilterContext)
   const [facilities, setConfig] = useFacilities(false);
 
   useEffect(() => {
@@ -21,22 +21,22 @@ const Home = () => {
   };
 
   const onSearch = (searchText) => {
-    setFilter((filter) => {
+    filter.setstate(filter => {
       return { ...filter, name: searchText.toLowerCase() };
     });
   };
 
   const filterFacilities = () => {
-    const data = filter.name
-      ? facilities.filter((f) => f.name.toLowerCase().includes(filter?.name))
+    const data = filter.state?.name
+      ? facilities.filter(f => f.name.toLowerCase().includes(filter.state?.name))
       : facilities;
 
-    if (filter.type || filter.isActive) {
-      return data.filter((f) => {
-        let cond = f.type.join(", ").toLowerCase().includes(filter?.type);
+    if (filter.state?.type || filter.state?.isActive) {
+      return data.filter(f => {
+        let cond = f.type.join(", ").toLowerCase().includes(filter.state?.type);
         const isActive = f.isActive ? "true" : "false";
-        cond = filter.isActive
-          ? isActive === filter.isActive && (!filter.type || cond)
+        cond = filter.state.isActive
+          ? isActive === filter.state.isActive && (!filter.state.type || cond)
           : cond;
         return cond;
       });
@@ -63,13 +63,11 @@ const Home = () => {
                 onSearch={debounce(onSearch, 250, { maxWait: 1000 })}
                 enterButton
               />
-              <Filter setFilter={setFilter} debounce={debounce} layout="row" />
+              <Filter filter={filter} layout="row" />
               <List
                 className="facilities-data"
                 itemLayout="vertical"
                 size="large"
-                loadingIndicator={<Spin />}
-                loading={filterFacilities() ? false : <Spin />}
                 dataSource={filterFacilities()}
                 pagination={{
                   pageSize: 5,
@@ -134,9 +132,7 @@ const Home = () => {
           ) : (
             <Empty
               image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-              imageStyle={{
-                height: 60,
-              }}
+              style={{gridColumn: "span 2 / 4"}}
               description={<span>No Facilities</span>}
             />
           )}

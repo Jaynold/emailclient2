@@ -7,11 +7,13 @@ import "../styles/MyForm.css";
 const MyForm = (props) => {
   const [response, setConfig] = useFacilities(false);
   const { id } = useParams();
-  const history = useHistory()
+  const history = useHistory();
 
-  useEffect(() => {
-    setConfig({ url: "/1", method: "get" });
-  }, [setConfig]);
+  useEffect(
+    () =>
+      props.type === "Update" && setConfig({ url: `/${id}`, method: "get" }),
+    [setConfig, id]
+  );
 
   const onFinish = (values) => {
     if (props.type === "Create")
@@ -66,7 +68,7 @@ const MyForm = (props) => {
         >
           <Form.Item
             name={["facility", "name"]}
-            initialValue={response ? response.name : ""}
+            initialValue={response?.name}
             label="Name"
             rules={[
               {
@@ -81,7 +83,7 @@ const MyForm = (props) => {
           <Form.Item
             name={["facility", "email"]}
             label="Email"
-            initialValue={response ? response.email : ""}
+            initialValue={response?.email}
             rules={[
               {
                 type: "email",
@@ -96,7 +98,7 @@ const MyForm = (props) => {
           <Form.Item
             name={["facility", "description"]}
             label="Description"
-            initialValue={response ? response.description : ""}
+            initialValue={response?.description}
             rules={[
               {
                 required: true,
@@ -111,7 +113,7 @@ const MyForm = (props) => {
             name={["facility", "type"]}
             label="Type"
             rules={[{ required: true }]}
-            initialValue={response ? response.type : []}
+            initialValue={response?.type}
           >
             <Select
               mode="multiple"
@@ -119,17 +121,16 @@ const MyForm = (props) => {
               placeholder="Select a Facility Type"
               options={facility_types}
             />
-            
           </Form.Item>
-
+          {console.log(response.isActive)}
           <Form.Item name={["facility", "isActive"]} label="isActive">
-            <Switch defaultChecked={response ? response.isActive : ""} />
+            <Switch defaultChecked={response?.isActive} />
           </Form.Item>
 
           <Form.Item
             name={["facility", "address"]}
             label="Address"
-            initialValue={response ? response.address : ""}
+            initialValue={response?.address}
             rules={[
               {
                 whitespace: true,
