@@ -10,9 +10,13 @@ const MyForm = (props) => {
   const history = useHistory();
 
   useEffect(
-    () =>
-      props.type === "Update" && setConfig({ url: `/${id}`, method: "get" }),
-    [setConfig, id]
+    () => {
+      let didCancel = false;
+      if(!didCancel && props.type === "Update")
+        setConfig({ url: `/${id}`, method: "get" });
+      return () => didCancel = true 
+    },
+    [id, props.type, setConfig]
   );
 
   const onFinish = (values) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import "../styles/Home.css";
-import { List, Skeleton, Spin, Empty, Button } from "antd";
+import { List, Skeleton, Spin, Empty, Button, Select, Input } from "antd";
 import { debounce } from "lodash";
 
 import { useFacilities } from "../hooks/useFacilities";
@@ -9,7 +9,7 @@ import Filter from "./Filter";
 import { FilterContext } from "../contexts/FilterContext";
 
 const Home = () => {
-  const filter = useContext(FilterContext)
+  const filter = useContext(FilterContext);
   const [facilities, setConfig] = useFacilities(false);
 
   useEffect(() => {
@@ -21,22 +21,39 @@ const Home = () => {
   };
 
   const onSearch = (searchText) => {
-    filter.setstate(filter => {
+    filter.setstate((filter) => {
       return { ...filter, name: searchText.toLowerCase() };
     });
   };
 
   const filterFacilities = () => {
+    const typeCondition = (f) =>
+      f.type
+        .join(", ")
+        .toLowerCase()
+        .includes(filter.state?.type?.toLowerCase());
+    const isActiveCondition = (f) => (f.isActive ? "true" : "false");
+
     const data = filter.state?.name
-      ? facilities.filter(f => f.name.toLowerCase().includes(filter.state?.name))
+      ? facilities.filter((f) =>
+          f.name.toLowerCase().includes(filter.state?.name?.toLowerCase())
+        )
       : facilities;
 
-    if (filter.state?.type || filter.state?.isActive) {
-      return data.filter(f => {
-        let cond = f.type.join(", ").toLowerCase().includes(filter.state?.type);
-        const isActive = f.isActive ? "true" : "false";
+    if (filter.state?.type || filter.state?.isActive || filter.state?.address) {
+      return data.filter((f) => {
+        console.log(filter.state.isActive);
+        let cond = typeCondition(f);
+
+        cond = filter.state.address
+          ? f.address
+              .toLowerCase()
+              .includes(filter.state?.address?.toLowerCase()) &&
+            (!filter.state?.type || cond)
+          : cond;
         cond = filter.state.isActive
-          ? isActive === filter.state.isActive && (!filter.state.type || cond)
+          ? isActiveCondition(f) === filter.state.isActive &&
+            (!filter.state?.address || cond)
           : cond;
         return cond;
       });
@@ -63,7 +80,53 @@ const Home = () => {
                 onSearch={debounce(onSearch, 250, { maxWait: 1000 })}
                 enterButton
               />
-              <Filter filter={filter} layout="row" />
+              <Filter
+                filter={filter.setstate}
+                layout="row"
+                render={(setFilter) => {
+                  return (
+                    <>
+                      <Input
+                        placeholder="Filter By Type"
+                        onChange={(event) =>
+                          debounce(setFilter, 250, { maxWait: 500 })(
+                            "type",
+                            event.target.value
+                          )
+                        }
+                      />
+                      <Select
+                        style={{
+                          width: "100%",
+                          background: "white",
+                        }}
+                        defaultActiveFirstOption="false"
+                        allowClear
+                        onChange={(value) =>
+                          debounce(setFilter, 250, { maxWait: 500 })(
+                            "isActive",
+                            value
+                          )
+                        }
+                        placeholder="Filter By Activity status"
+                        options={[
+                          { label: "Active", value: "true" },
+                          { label: "Not Active", value: "false" },
+                        ]}
+                      />
+                      <Input
+                        placeholder="Filter By Address"
+                        onChange={(event) =>
+                          debounce(setFilter, 250, { maxWait: 500 })(
+                            "address",
+                            event.target.value
+                          )
+                        }
+                      />
+                    </>
+                  );
+                }}
+              />
               <List
                 className="facilities-data"
                 itemLayout="vertical"
@@ -79,7 +142,7 @@ const Home = () => {
                     actions={[
                       <Button
                         type="primary"
-                        style={{background: 'goldenrod', borderColor: "gold"}}
+                        style={{ background: "goldenrod", borderColor: "gold" }}
                         onClick={() =>
                           (document.location.href = `/update/${item.id}`)
                         }
@@ -132,7 +195,7 @@ const Home = () => {
           ) : (
             <Empty
               image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-              style={{gridColumn: "span 2 / 4"}}
+              style={{ gridColumn: "span 2 / 4" }}
               description={<span>No Facilities</span>}
             />
           )}
