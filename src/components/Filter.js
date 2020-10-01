@@ -1,18 +1,30 @@
 import React from "react";
 
-const Filter = ({ filter, layout, render }) => {
-  
+const Filter = ({ customFilter, layout, render }) => {
   const checkType = (value) => {
-    switch (typeof value) {
-      case "string":
-        return value.toLowerCase();
-      default:
-        return value;
-    }
+    return {
+      data: value && value.toLowerCase(),
+      condition: (data) => {
+        if (value === undefined) return true;
+        else {
+          value = value.toLowerCase();
+          switch (typeof data) {
+            case "string":
+              return data.toLowerCase().includes(value);
+            case "object":
+              return data.join(", ").toLowerCase().includes(value);
+            case "boolean":
+              return (data ? "Active" : "not active").toLowerCase() === value;
+            default:
+              return !!value;
+          }
+        }
+      },
+    };
   };
 
   const filterData = (id, value) =>
-    filter((filter) => {
+    customFilter((filter) => {
       return { ...filter, [id]: checkType(value) };
     });
 

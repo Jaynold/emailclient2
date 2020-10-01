@@ -4,8 +4,6 @@ import { NavLink } from "react-router-dom";
 import Logo from "../logo.svg";
 import Filter from "./Filter";
 import { FilterContext } from "../contexts/FilterContext";
-import { Input, Select } from "antd";
-import { debounce } from "lodash";
 import MyFilters from "./MyFilters";
 
 const Navbar = () => {
@@ -36,7 +34,7 @@ const Navbar = () => {
         </li>
         <li className="nav-item">
           <Filter
-            filter={filter.setstate}
+            customFilter={filter.setstate}
             layout="column"
             render={(setFilter) => <MyFilters setFilter={setFilter} />}
           />

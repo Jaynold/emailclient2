@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import "../styles/Home.css";
-import { List, Skeleton, Spin, Empty, Button, Select, Input } from "antd";
+import { List, Skeleton, Spin, Empty, Button } from "antd";
 import { debounce } from "lodash";
 
 import { useFacilities } from "../hooks/useFacilities";
@@ -24,34 +24,20 @@ const Home = () => {
   };
 
   const filterFacilities = () => {
-    const typeCondition = (f) =>
-      typeof filter.state.type === "undefined" ||
-      f.type.join(", ").toLowerCase().includes(filter.state?.type);
-    const addressCondition = (f) =>
-      typeof filter.state.address === "undefined" ||
-      f.address.toLowerCase().includes(filter.state?.address);
-    const isActiveCondition = (f) =>
-      typeof filter.state.isActive === "undefined" ||
-      (f.isActive ? "Active" : "not active").toLowerCase() ===
-        filter.state?.isActive;
-    const emailCondition = (f) =>
-      typeof filter.state.email === "undefined" ||
-      f.email.toLowerCase().includes(filter.state?.email);
     const data = filter.state?.name
       ? facilities.filter((f) =>
           f.name.toLowerCase().includes(filter.state?.name)
         )
       : facilities;
-
+    
     if (!filter.state?.name) {
       return data.filter((f) => {
         const conds = [
-          typeCondition(f),
-          isActiveCondition(f),
-          addressCondition(f),
-          emailCondition(f),
+          filter.state.type === undefined || filter.state.type.condition(f.type),
+          filter.state.isActive === undefined || filter.state.isActive.condition(f.isActive),
+          filter.state.address === undefined || filter.state.address.condition(f.address),
+          filter.state.email === undefined || filter.state.email.condition(f.email),
         ];
-        console.log(conds);
         let count = 0;
         while (count < conds.length) {
           if (!conds[count]) return false;
@@ -83,7 +69,7 @@ const Home = () => {
                 enterButton
               />
               <Filter
-                filter={filter.setstate}
+                customFilter={filter.setstate}
                 layout="row"
                 render={(setFilter) => <MyFilters setFilter={setFilter}/>}
               />
