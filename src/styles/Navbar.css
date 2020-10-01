@@ -1,50 +1,92 @@
-.navbar{
+.navbar {
+  position: fixed;
+  background-color: var(--navbar-color);
+  width: var(--navbar-width);
+  height: 100vh;
+  font-size: 0.8rem;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+.navbar-nav {
+  width: inherit;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-item {
+  height: 4rem;
+  width: 100%;
+}
+
+.nav-item:first-child {
+  overflow: hidden;
+  height: fit-content;
+  margin-top: 0.5rem;
+}
+
+.nav-item:last-child {
+  margin-top: 2rem;
+}
+
+.nav-item a {
+  color: white !important;
+}
+.nav-item a:not(.active):hover {
+  color: var(--hover-color) !important;
+}
+
+.link-text {
+  height: inherit;
+  width: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.nav-item:hover {
+  font-weight: 800;
+  color: var(--hover-color);
+}
+
+.active {
+  font-weight: 800;
+  background-color: var(--hover-color);
+}
+
+@media only screen and (max-width: 1000.99px) {
+  .navbar {
     position: fixed;
     background-color: var(--navbar-color);
-    width: var(--navbar-width);   
-    height: 100vh;
+    width: 100vw;
+    height: 5rem;
     font-size: 0.8rem;
-    top:0;
-    left:0;
-    z-index: 99;
-}
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
 
-.navbar-nav{
-    width: inherit;   
-    height: 100%;
+  .navbar-nav {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 0;
     list-style: none;
-}
+  }
 
-.nav-item{
-    height: 4rem;
-    width: 100%;
-}
+  .navbar-nav .filters {
+    display: none !important;
+  }
 
-.nav-item:last-child{
-    margin-top: 2rem;
-}
+  .nav-item {
+    height: 5rem;
+  }
 
-.nav-item a{color:white !important}
-.nav-item a:not(.active):hover{color: var(--hover-color) !important}
-
-.link-text{
-    height: inherit;
-    width: inherit;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-}
-
-.nav-item:hover{
-    font-weight: 800;
-    color: var(--hover-color);
-}
-
-.active{
-    font-weight: 800;
-    background-color: var(--hover-color);
+  .nav-item:first-child {
+    width: 20rem !important;
+  }
 }

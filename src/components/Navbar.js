@@ -12,14 +12,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <ul className="navbar-nav">
-        <li
-          className="nav-item"
-          style={{
-            overflow: "hidden",
-            height: "fit-content",
-            marginTop: "0.5rem",
-          }}
-        >
+        <li className="nav-item">
           <img src={Logo} alt="logo" />
         </li>
         <li className="nav-item">
@@ -38,7 +31,7 @@ const Navbar = () => {
         <Filter
           customFilter={filter.setstate}
           layout="column"
-          render={(setFilter) => <FilterItems setFilter={setFilter} />}
+          render={setFilter => <FilterItems setFilter={setFilter} />}
         />
       </ul>
     </nav>

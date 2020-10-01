@@ -118,7 +118,6 @@ const MyForm = props => {
               options={facility_types}
             />
           </Form.Item>
-          {console.log(response.isActive)}
           <Form.Item name={["facility", "isActive"]} label="isActive">
             <Switch defaultChecked={response?.isActive} />
           </Form.Item>
