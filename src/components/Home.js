@@ -139,7 +139,7 @@ const Home = () => {
           ) : (
             <Empty
               image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-              style={{ gridColumn: "span 2 / 4" }}
+              className="empty-image"
               description={<span>No Facilities</span>}
             />
           )}

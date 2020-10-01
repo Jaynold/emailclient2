@@ -10,11 +10,11 @@ import FilterProvider from "./contexts/FilterContext";
 function App() {
   return (
     <>
-      <FilterProvider>
-        <Navbar />
-        <Route exact path="/" component={() => <Home />} />
-      </FilterProvider>
       <section className="content">
+        <FilterProvider>
+          <Navbar />
+          <Route exact path="/" component={() => <Home />} />
+        </FilterProvider>
         <Switch>
           <Route exact path="/settings" component={() => <Settings />} />
           <Route exact path="/table" component={() => <TableView />} />

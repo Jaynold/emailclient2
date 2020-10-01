@@ -4,57 +4,7 @@
     "avatarUrl": "https://randomuser.me/api/portraits/women/33.jpg",
     "email": "melissa@macrosoft.com"
   },
-  "facilities": [
-    {
-      "name": "Programming Services",
-      "email": "prog.servs@gmail.com",
-      "description": "To give programming services",
-      "type": [
-        "Electricity",
-        "Furniture"
-      ],
-      "isActive": true,
-      "address": "Near Power House",
-      "id": 1
-    },
-    {
-      "name": "Technical Services",
-      "email": "tech.servs@gmail.com",
-      "description": "To give technical services",
-      "type": [
-        "Electricity",
-        "Computers"
-      ],
-      "isActive": false,
-      "address": "Near Power House",
-      "id": 2
-    },
-    {
-      "name": "Deep Underground Plumbing",
-      "email": "deep.plumb@asd.com",
-      "description": "To give plumbing services underground",
-      "type": [
-        "Electricity",
-        "Computers"
-      ],
-      "isActive": false,
-      "address": "Aquem",
-      "id": 3
-    },
-    {
-      "name": "People Power",
-      "email": "deep.plumb@asd.com",
-      "description": "To give plumbing services underground",
-      "type": [
-        "Electricity",
-        "Furniture",
-        "Computers"
-      ],
-      "isActive": false,
-      "address": "Aquem",
-      "id": 4
-    }
-  ],
+  "facilities": [],
   "folders": [
     {
       "id": 1,

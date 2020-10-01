@@ -7,7 +7,7 @@ const FilterItems = ({ setFilter }) => {
     <>
       <Input
         placeholder="Filter By Type"
-        onChange={(event) =>
+        onChange={event =>
           debounce(setFilter, 250, { maxWait: 500 })("type", event.target.value)
         }
       />
@@ -19,7 +19,7 @@ const FilterItems = ({ setFilter }) => {
         }}
         defaultActiveFirstOption="false"
         allowClear
-        onChange={(value) =>
+        onChange={value =>
           debounce(setFilter, 250, { maxWait: 500 })("isActive", value)
         }
         placeholder="Filter By Activity status"
@@ -30,7 +30,7 @@ const FilterItems = ({ setFilter }) => {
       />
       <Input
         placeholder="Filter By Address"
-        onChange={(event) =>
+        onChange={event =>
           debounce(setFilter, 250, { maxWait: 500 })(
             "address",
             event.target.value
