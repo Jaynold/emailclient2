@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import Logo from "../logo.svg";
 import Filter from "./Filter";
 import { FilterContext } from "../contexts/FilterContext";
-import MyFilters from "./MyFilters";
+import FilterItems from "./FilterItems";
 
 const Navbar = () => {
   const filter = useContext(FilterContext);
@@ -32,13 +32,14 @@ const Navbar = () => {
             Settings
           </NavLink>
         </li>
-        <li className="nav-item">
-          <Filter
-            customFilter={filter.setstate}
-            layout="column"
-            render={(setFilter) => <MyFilters setFilter={setFilter} />}
-          />
-        </li>
+
+        <br />
+
+        <Filter
+          customFilter={filter.setstate}
+          layout="column"
+          render={(setFilter) => <FilterItems setFilter={setFilter} />}
+        />
       </ul>
     </nav>
   );

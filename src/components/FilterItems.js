@@ -2,7 +2,7 @@ import React from "react";
 import { Input, Select } from "antd";
 import { debounce } from "lodash";
 
-const MyFilters = ({ setFilter }) => {
+const FilterItems = ({ setFilter }) => {
   return (
     <>
       <Input
@@ -12,6 +12,7 @@ const MyFilters = ({ setFilter }) => {
         }
       />
       <Select
+        id="isActive"
         style={{
           width: "100%",
           background: "white",
@@ -36,17 +37,8 @@ const MyFilters = ({ setFilter }) => {
           )
         }
       />
-      <Input
-        placeholder="Filter By Email"
-        onChange={(event) =>
-          debounce(setFilter, 250, { maxWait: 500 })(
-            "email",
-            event.target.value
-          )
-        }
-      />
     </>
   );
 };
 
-export default MyFilters;
+export default FilterItems;

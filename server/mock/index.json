@@ -6,39 +6,53 @@
   },
   "facilities": [
     {
-      "name": "Gorilla Power",
-      "email": "gorrilla@gmail.com",
-      "description": "To give power",
+      "name": "Programming Services",
+      "email": "prog.servs@gmail.com",
+      "description": "To give programming services",
       "type": [
-        "Electricity"
+        "Electricity",
+        "Furniture"
       ],
       "isActive": true,
-      "address": "Near Power",
+      "address": "Near Power House",
       "id": 1
     },
     {
-      "name": "Power",
-      "email": "gorrilla@gmail.com",
-      "description": "To give power",
+      "name": "Technical Services",
+      "email": "tech.servs@gmail.com",
+      "description": "To give technical services",
       "type": [
-        "Electricity"
+        "Electricity",
+        "Computers"
       ],
       "isActive": false,
       "address": "Near Power House",
       "id": 2
     },
     {
-      "name": "Power",
-      "email": "sdf@asd.com",
-      "description": "dsf",
+      "name": "Deep Underground Plumbing",
+      "email": "deep.plumb@asd.com",
+      "description": "To give plumbing services underground",
+      "type": [
+        "Electricity",
+        "Computers"
+      ],
+      "isActive": false,
+      "address": "Aquem",
+      "id": 3
+    },
+    {
+      "name": "People Power",
+      "email": "deep.plumb@asd.com",
+      "description": "To give plumbing services underground",
       "type": [
         "Electricity",
         "Furniture",
         "Computers"
       ],
-      "isActive": true,
-      "address": "Near Power House",
-      "id": 3
+      "isActive": false,
+      "address": "Aquem",
+      "id": 4
     }
   ],
   "folders": [

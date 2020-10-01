@@ -7,7 +7,7 @@ import { useFacilities } from "../hooks/useFacilities";
 import Search from "antd/lib/input/Search";
 import Filter from "./Filter";
 import { FilterContext } from "../contexts/FilterContext";
-import MyFilters from "./MyFilters";
+import FilterItems from "./FilterItems";
 
 const Home = () => {
   const filter = useContext(FilterContext);
@@ -23,30 +23,30 @@ const Home = () => {
     });
   };
 
-  const filterFacilities = () => {
-    const data = filter.state?.name
-      ? facilities.filter((f) =>
-          f.name.toLowerCase().includes(filter.state?.name)
-        )
-      : facilities;
-    
+  const filterFacilities = (data) => {
+    //Multiple Dynamic Conditions
     if (!filter.state?.name) {
-      return data.filter((f) => {
-        const conds = [
-          filter.state.type === undefined || filter.state.type.condition(f.type),
-          filter.state.isActive === undefined || filter.state.isActive.condition(f.isActive),
-          filter.state.address === undefined || filter.state.address.condition(f.address),
-          filter.state.email === undefined || filter.state.email.condition(f.email),
-        ];
-        let count = 0;
-        while (count < conds.length) {
-          if (!conds[count]) return false;
-          count++;
-        }
+      const fieldNames = ["type", "isActive", "address"];  //add new filter id
+
+      return facilities.filter((f) => {
+        const conditions = [];
+        fieldNames.forEach((val) =>
+          conditions.push(
+            filter.state[val] === undefined ||
+              filter.state[val].condition(f[val])
+          )
+        );
+
+        for (let count = 0; count < conditions.length; count++)
+          if (!conditions[count]) return false;
         return true;
       });
     }
-    return data;
+
+    //Search Condition
+    return data.filter((f) =>
+        f.name.toLowerCase().includes(filter.state?.name)
+      );
   };
 
   return (
@@ -71,13 +71,13 @@ const Home = () => {
               <Filter
                 customFilter={filter.setstate}
                 layout="row"
-                render={(setFilter) => <MyFilters setFilter={setFilter}/>}
+                render={(setFilter) => <FilterItems setFilter={setFilter} />}
               />
               <List
                 className="facilities-data"
                 itemLayout="vertical"
                 size="large"
-                dataSource={filterFacilities()}
+                dataSource={filterFacilities(facilities) || facilities}
                 pagination={{
                   pageSize: 5,
                   responsive: true,
