@@ -13,24 +13,24 @@ const Home = () => {
   const filter = useContext(FilterContext);
   const [facilities, setConfig] = useFacilities(false);
 
-  useEffect(() => setConfig({ type: "GET_FACILITIES" }), [setConfig]);
+  useEffect(() => setConfig({ url: "", method: "get" }), [setConfig]);
 
-  const deleteFaciltity = (id) => setConfig({ type: "DELETE_FACILITY", id });
+  const deleteFaciltity = id => setConfig({ url: `/${id}`, method: "delete" });
 
-  const onSearch = (searchText) => {
-    filter.setstate((filter) => {
+  const onSearch = searchText => {
+    filter.setstate(filter => {
       return { ...filter, name: searchText.toLowerCase() };
     });
   };
 
-  const filterFacilities = (data) => {
-    //Multiple Dynamic Conditions
+  const filterFacilities = data => {
+    //Multiple Dynamic Filters
     if (!filter.state?.name) {
-      const fieldNames = ["type", "isActive", "address"];  //add new filter id
+      const fieldNames = ["type", "isActive", "address"]; //add new filter id
 
-      return facilities.filter((f) => {
+      return data.filter(f => {
         const conditions = [];
-        fieldNames.forEach((val) =>
+        fieldNames.forEach(val =>
           conditions.push(
             filter.state[val] === undefined ||
               filter.state[val].condition(f[val])
@@ -43,10 +43,8 @@ const Home = () => {
       });
     }
 
-    //Search Condition
-    return data.filter((f) =>
-        f.name.toLowerCase().includes(filter.state?.name)
-      );
+    //Search Filters
+    return data.filter(f => f.name.toLowerCase().includes(filter.state?.name));
   };
 
   return (
@@ -71,7 +69,7 @@ const Home = () => {
               <Filter
                 customFilter={filter.setstate}
                 layout="row"
-                render={(setFilter) => <FilterItems setFilter={setFilter} />}
+                render={setFilter => <FilterItems setFilter={setFilter} />}
               />
               <List
                 className="facilities-data"
@@ -82,7 +80,7 @@ const Home = () => {
                   pageSize: 5,
                   responsive: true,
                 }}
-                renderItem={(item) => (
+                renderItem={item => (
                   <List.Item
                     className="facility"
                     actions={[

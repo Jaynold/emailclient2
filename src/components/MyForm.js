@@ -4,22 +4,22 @@ import { useFacilities } from "../hooks/useFacilities";
 import { useParams, useHistory } from "react-router";
 import "../styles/MyForm.css";
 
-const MyForm = (props) => {
+const MyForm = props => {
   const [response, setConfig] = useFacilities(false);
   const { id } = useParams();
   const history = useHistory();
 
   useEffect(() => {
     let didCancel = false;
-    if (!didCancel && props.type === "Update")
-      setConfig({ type: "GET_FACILITY", id });
+    if (!didCancel && props.type.toLowerCase() === "update")
+      setConfig({ url: `/${id}`, method: "get" });
     return () => (didCancel = true);
   }, [id, props.type, setConfig]);
 
-  const onFinish = (values) => {
-    if (props.type === "Create")
-      setConfig({ type: "CREATE_FACILITY", data: values.facility });
-    else setConfig({ type: "UPDATE_FACILITY", id, data: values.facility });
+  const onFinish = values => {
+    if (props.type.toLowerCase() === "create")
+      setConfig({ url: "", method: "post", data: values.facility });
+    else setConfig({ url: `/${id}`, method: "patch", data: values.facility });
     history.push("/");
   };
 

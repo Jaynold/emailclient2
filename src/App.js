@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Switch, Route, Redirect } from "react-router";
 import Home from "./components/Home";
 import MyForm from "./components/MyForm";
@@ -12,7 +12,7 @@ function App() {
     <>
       <FilterProvider>
         <Navbar />
-        <Route exact path="/"component={() => <Home />}/>
+        <Route exact path="/" component={() => <Home />} />
       </FilterProvider>
       <section className="content">
         <Switch>
