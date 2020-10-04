@@ -1,25 +1,26 @@
-import React, { useEffect } from "react";
-import { Form, Input, Button, Select, Switch, Spin } from "antd";
-import { useFacilities } from "../hooks/useFacilities";
-import { useParams, useHistory } from "react-router";
+import React, { useContext } from "react";
+import { Form, Input, Button, Select, Switch } from "antd";
 import "../styles/MyForm.css";
+import { FacilitiesContext } from "../contexts/FaciltiesContext";
 
 const MyForm = props => {
-  const [response, setConfig] = useFacilities(false);
-  const { id } = useParams();
-  const history = useHistory();
+  const { setConfig } = useContext(FacilitiesContext);
+  const { history, location, type } = props;
+  const facility = location?.state;
 
-  useEffect(() => {
-    let didCancel = false;
-    if (!didCancel && props.type.toLowerCase() === "update")
-      setConfig({ url: `/${id}`, method: "get" });
-    return () => (didCancel = true);
-  }, [id, props.type, setConfig]);
+  const formtype = {
+    isCreate: type === "Create",
+    isUpdate: type === "Update",
+  };
 
   const onFinish = values => {
-    if (props.type.toLowerCase() === "create")
-      setConfig({ url: "", method: "post", data: values.facility });
-    else setConfig({ url: `/${id}`, method: "patch", data: values.facility });
+    if (formtype.isCreate) setConfig({ url: "", method: "post", data: values });
+    else
+      setConfig({
+        url: `/${facility?.id}`,
+        method: "patch",
+        data: values,
+      });
     history.push("/");
   };
 
@@ -49,101 +50,97 @@ const MyForm = props => {
   return (
     <>
       <h1 className="heading">
-        {props.type === "Update"
-          ? "Update Facility " + id
+        {formtype.isUpdate
+          ? `Update Facility ${facility?.id}`
           : "Create a Facility"}
       </h1>
-      {props.type === "Create" || (props.type === "Update" && response) ? (
-        <Form
-          {...layout}
-          className="frm"
-          name="myForm"
-          size="large"
-          validateMessages={validateMessages}
-          onFinish={onFinish}
+      <Form
+        {...layout}
+        className="frm"
+        name="myForm"
+        size="large"
+        validateMessages={validateMessages}
+        onFinish={onFinish}
+      >
+        <Form.Item
+          name="name"
+          initialValue={facility?.name}
+          label="Name"
+          rules={[
+            {
+              required: true,
+              whitespace: true,
+            },
+          ]}
         >
-          <Form.Item
-            name={["facility", "name"]}
-            initialValue={response?.name}
-            label="Name"
-            rules={[
-              {
-                required: true,
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+          <Input />
+        </Form.Item>
 
-          <Form.Item
-            name={["facility", "email"]}
-            label="Email"
-            initialValue={response?.email}
-            rules={[
-              {
-                type: "email",
-                required: true,
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+        <Form.Item
+          name="email"
+          label="Email"
+          initialValue={facility?.email}
+          rules={[
+            {
+              type: "email",
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-          <Form.Item
-            name={["facility", "description"]}
-            label="Description"
-            initialValue={response?.description}
-            rules={[
-              {
-                required: true,
-                whitespace: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+        <Form.Item
+          name="description"
+          label="Description"
+          initialValue={facility?.description}
+          rules={[
+            {
+              required: true,
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-          <Form.Item
-            name={["facility", "type"]}
-            label="Type"
-            rules={[{ required: true }]}
-            initialValue={response?.type}
-          >
-            <Select
-              mode="multiple"
-              allowClear
-              placeholder="Select a Facility Type"
-              options={facility_types}
-            />
-          </Form.Item>
-          <Form.Item name={["facility", "isActive"]} label="isActive">
-            <Switch defaultChecked={response?.isActive} />
-          </Form.Item>
+        <Form.Item
+          name="type"
+          label="Type"
+          rules={[{ required: true }]}
+          initialValue={facility?.type}
+        >
+          <Select
+            mode="multiple"
+            allowClear
+            placeholder="Select a Facility Type"
+            options={facility_types}
+          />
+        </Form.Item>
+        <Form.Item name={"isActive"} label="isActive">
+          <Switch defaultChecked={facility?.isActive} />
+        </Form.Item>
 
-          <Form.Item
-            name={["facility", "address"]}
-            label="Address"
-            initialValue={response?.address}
-            rules={[
-              {
-                whitespace: true,
-                required: true,
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+        <Form.Item
+          name="address"
+          label="Address"
+          initialValue={facility?.address}
+          rules={[
+            {
+              whitespace: true,
+              required: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-          <Form.Item {...buttonLayout}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-      ) : (
-        <Spin />
+        <Form.Item {...buttonLayout}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
       )}
     </>
   );

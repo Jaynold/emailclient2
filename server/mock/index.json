@@ -7,15 +7,26 @@
   "facilities": [
     {
       "name": "Power",
-      "email": "gorrilla@gmail.com",
+      "email": "pow@abc.com",
       "description": "To give power",
       "type": [
-        "Furniture",
         "Electricity"
       ],
-      "isActive": true,
+      "isActive": false,
       "address": "Near Power House",
       "id": 1
+    },
+    {
+      "name": "Tech Services",
+      "email": "tech@abc.com",
+      "description": "To give tech services",
+      "type": [
+        "Electricity",
+        "Computers"
+      ],
+      "isActive": true,
+      "address": "sdfdsf",
+      "id": 2
     }
   ],
   "folders": [

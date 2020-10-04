@@ -1,10 +1,17 @@
 import React from "react";
 import { Input, Select } from "antd";
 import { debounce } from "lodash";
+import Search from "antd/lib/input/Search";
 
-const FilterItems = ({ setFilter }) => {
+const FilterItems = ({ setFilter, onSearch }) => {
   return (
     <>
+      <Search
+        className="search"
+        placeholder="Search By Name"
+        onSearch={debounce(onSearch, 250, { maxWait: 1000 })}
+        enterButton
+      />
       <Input
         placeholder="Filter By Type"
         onChange={event =>

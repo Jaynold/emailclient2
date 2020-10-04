@@ -3,11 +3,11 @@ import "../styles/Navbar.css";
 import { NavLink } from "react-router-dom";
 import Logo from "../logo.svg";
 import Filter from "./Filter";
-import { FilterContext } from "../contexts/FilterContext";
 import FilterItems from "./FilterItems";
+import { FacilitiesContext } from "../contexts/FaciltiesContext";
 
 const Navbar = () => {
-  const filter = useContext(FilterContext);
+  const { facilities, setFiltered } = useContext(FacilitiesContext);
 
   return (
     <nav className="navbar">
@@ -29,9 +29,13 @@ const Navbar = () => {
         <br />
 
         <Filter
-          customFilter={filter.setstate}
+          datasource={facilities}
+          onFiltered={setFiltered}
           layout="column"
-          render={setFilter => <FilterItems setFilter={setFilter} />}
+          fieldNames={["type", "isActive", "address"]} //add filter field id here
+          render={(setFilter, onSearch) => (
+            <FilterItems setFilter={setFilter} onSearch={onSearch} />
+          )}
         />
       </ul>
     </nav>

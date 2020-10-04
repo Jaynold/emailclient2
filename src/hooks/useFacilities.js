@@ -2,20 +2,18 @@ import Axios from "axios";
 import { useEffect, useState } from "react";
 
 export const useFacilities = init => {
-  const [response, setResponse] = useState(false);
-  const [config, setConfig] = useState(false);
+  const [response, setResponse] = useState(init);
+  const [config, setConfig] = useState(init);
 
   useEffect(() => {
     let didCancel = false;
-    const executeQuery = async (setResponse, action) => {
+    const executeQuery = async () => {
       let result;
-      result =
-        config &&
-        (await Axios.request({
-          ...config,
-          baseURL: process.env.REACT_APP_BASE_URL,
-          headers: { Authorization: process.env.REACT_APP_AUTHORIZATION },
-        }));
+      result = await Axios.request({
+        ...config,
+        baseURL: process.env.REACT_APP_BASE_URL,
+        headers: { Authorization: process.env.REACT_APP_AUTHORIZATION },
+      });
       if (config.method === "delete")
         result = await Axios.get(process.env.REACT_APP_BASE_URL, {
           headers: { Authorization: process.env.REACT_APP_AUTHORIZATION },
@@ -29,7 +27,7 @@ export const useFacilities = init => {
       }
     };
 
-    if (!didCancel && config) executeQuery(setResponse, config);
+    if (!didCancel && config) executeQuery();
 
     return () => (didCancel = true);
   }, [config]);

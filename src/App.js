@@ -5,26 +5,39 @@ import MyForm from "./components/MyForm";
 import TableView from "./components/TableView";
 import Navbar from "./components/Navbar";
 import Settings from "./components/Settings";
-import FilterProvider from "./contexts/FilterContext";
+import FacilitiesProvider from "./contexts/FaciltiesContext";
 
 function App() {
   return (
     <>
       <section className="content">
-        <FilterProvider>
+        <FacilitiesProvider>
           <Navbar />
           <Route exact path="/" component={() => <Home />} />
-        </FilterProvider>
-        <Switch>
-          <Route exact path="/settings" component={() => <Settings />} />
-          <Route exact path="/table" component={() => <TableView />} />
-          <Route path="/create" component={() => <MyForm type="Create" />} />
-          <Route
-            path="/update/:id"
-            component={() => <MyForm type="Update" />}
-          />
-          <Route path="*" component={() => <Redirect to="/" />} />
-        </Switch>
+          <Switch>
+            <Route exact path="/settings" component={() => <Settings />} />
+            <Route exact path="/table" component={() => <TableView />} />
+            <Route
+              path="/create"
+              component={({ history }) => (
+                <MyForm {...{ type: "Create", history }} />
+              )}
+            />
+            <Route
+              path="/update/:id"
+              component={({ history, location }) => (
+                <MyForm
+                  {...{
+                    type: "Update",
+                    history,
+                    location,
+                  }}
+                />
+              )}
+            />
+            <Route path="*" component={() => <Redirect to="/" />} />
+          </Switch>
+        </FacilitiesProvider>
       </section>
     </>
   );
