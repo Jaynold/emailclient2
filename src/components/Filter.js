@@ -26,31 +26,29 @@ const Filter = ({ datasource, onFiltered, layout, render, fieldNames }) => {
     let didCancel = false;
 
     const isFiltersEmpty = () => {
-      const emptyFiltersCondition = [];
-      fieldNames.forEach(val =>
-        emptyFiltersCondition.push(
-          !(filters[val] === undefined) && filters[val]?.isEmpty
-        )
-      );
-      return emptyFiltersCondition.reduce((acc, curr) => acc + curr);
+      let property;
+      for (let index = 0; index < fieldNames.length; index++) {
+        property = fieldNames[index];
+        if (filters[property] !== undefined && !filters[property]?.isEmpty)
+          return false;
+      }
+      return true;
     };
 
     const getFilteredData = () => {
       //Multiple Filters section
-      if (isFiltersEmpty())
+      if (!isFiltersEmpty()) {
+        //get filtered data if filters are not empty
+        let property;
         return datasource.filter(f => {
-          //get filtered data if filters are not empty
-          const conditions = [];
-          fieldNames.map(
-            val =>
-              filters[val] && conditions.push(filters[val].condition(f[val]))
-          );
-
-          for (let count = 0; count < conditions.length; count++)
-            if (!conditions[count]) return false;
+          for (let index = 0; index < fieldNames.length; index++) {
+            property = fieldNames[index];
+            if (filters[property])
+              if (!filters[property].condition(f[property])) return false;
+          }
           return true;
         });
-      else return false;
+      } else return false;
     };
 
     if (!didCancel) onFiltered(getFilteredData());
@@ -70,7 +68,7 @@ const Filter = ({ datasource, onFiltered, layout, render, fieldNames }) => {
         ...filter,
         [id]: {
           condition: setCondition(filtervalue),
-          isEmpty: !!filtervalue,
+          isEmpty: !Boolean(filtervalue),
         },
       };
     });
